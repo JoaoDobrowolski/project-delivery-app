@@ -3,7 +3,13 @@ const Sale = (sequelize, DataTypes) => {
   const Sale = sequelize.define('Sale', {
 
     id:{ type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    userId: DataTypes.INTEGER,
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'User',
+        key: 'id',
+      }
+    },
     sellerId: DataTypes.INTEGER,
     totalPrice: DataTypes.DECIMAL(9, 2),
     deliveryAddress: DataTypes.STRING,
@@ -14,16 +20,41 @@ const Sale = (sequelize, DataTypes) => {
   {
     underscored: true,
     timestamps: false,
-    tableName: 'Sales',
+    tableName: 'sales',
   }
   );
 
+  // Sale.associate = (models) => {
+  //   Sale.belongsTo(
+  //     models.User,
+  //     { primaryKey: 'id', as: 'user' }
+  //   );
+  // };
+
+  // Sale.associate = (models) => {
+  //   Sale.belongsTo(
+  //     models.User,
+  //     { primaryKey: 'id', as: 'saleProducts' }
+  //   );
+  // };
+
+
   Sale.associate = (models) => {
-    Sale.belongsTo(
-      models.sales,
-      { foreignKey: 'userId', as: 'Sales' }
-    );
-  };
+    Sale.belongsTo(models.User, 
+    {
+      foreignKey: "userId", as: "user"});
+    // Sale.belongsTo(models.User, {
+    //   foreignKey: "sellerId", as: "sale"
+    // })
+}
+
+
+  // BlogPost.associate = (db) => {
+  //   BlogPost.belongsTo(
+  //     db.User,
+  //     { as: 'user', primaryKey: 'id' }
+  //   );
+  // }
 
   return Sale;
 
