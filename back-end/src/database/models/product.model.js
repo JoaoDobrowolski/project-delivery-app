@@ -26,7 +26,7 @@
     });
 
     Product.associate = (models) => {
-        Product.hasMany(models.SalesProducts, {
+        Product.hasMany(models.SaleProduct, {
             foreignKey: "productId",
             as: "SalesProducts",
         });
@@ -35,4 +35,4 @@
     return Product;
 }
 
-module.exports = userModelSchema;
+module.exports = Product;

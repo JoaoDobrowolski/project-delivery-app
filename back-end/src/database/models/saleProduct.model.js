@@ -48,4 +48,6 @@ const SaleProduct = (sequelize, DataTypes) => {
     return SaleProduct;
   
   };
+
+  module.exports = SaleProduct;
   
