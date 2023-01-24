@@ -1,35 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 
-function Login() {
-  const [login, setLogin] = useState({
-    email: '',
-    password: '',
-  });
+export default function Login() {
+  const [userEmail, setUserEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const history = useHistory();
 
-  const validateEmail = () => {
-    const { email } = login;
-    const re = /\S+@\S+\.\S+/;
-    return re.test(email);
-  };
+  const clickLogin = async (e) => {
+    e.preventDefault();
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
 
-  const validatePassword = () => {
-    const { password } = login;
-    const NUM = 6;
-    const teste = password.length > NUM;
-    return teste;
-  };
 
-  const handleChange = ({ id, value }) => {
-    setLogin((prev) => ({
-      ...prev,
-      [id]: value,
-    }));
-  };
+    const fetchUser = async () => {
+      const {email, password} = user;
+      const login = {
+        Method: 'POST',
+        Body: email, password,
+      }
+      await fetch('https://localhost:3001/login', login);
+      Navigate('/login')
+    }
 
-  const clickLogin = () => {
-    // const { email } = login;
-    // const user = { email };
-    // history.push('/foods'); // mudar rota
+    const response = await fetch(
+      `${contante.host}/login`,
+      requestOptions
+    );
+    if (response.status === 200) {
+      const data = await response.json(); // { token}
+      localStorage.setItem('token', data.token);
+      Navigate('/home');
+    } else {
+      alert('username or password is incorrect');
+    }
   };
 
   return (
@@ -46,7 +50,7 @@ function Login() {
             id="email"
             placeholder="Enter your email"
             data-testid="common_login__input-email"
-            onChange={ (event) => handleChange(event.target) }
+            onChange={({ target: { value } }) => setUserEmail(value)}
           />
 
           <input
@@ -54,7 +58,7 @@ function Login() {
             placeholder="Enter your password"
             id="password"
             data-testid="common_login__input-password"
-            onChange={ (event) => handleChange(event.target) }
+            onChange={({ target: { value } }) => setPassword(value)}
           />
 
           <button
@@ -85,5 +89,3 @@ function Login() {
     </div>
   );
 }
-
-export default Login;
