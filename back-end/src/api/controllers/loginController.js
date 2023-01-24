@@ -8,7 +8,7 @@ const loginController = {
     const token = await LoginService.login(email, password);
     if (token.message) return res.status(400).json({ message: token.message });
       return res.status(200).json({ token });
-    // return res.status(200).json('controller ok');
+     // return res.status(200).json('controller ok');
   },
 };
 
