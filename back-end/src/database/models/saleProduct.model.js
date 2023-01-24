@@ -26,7 +26,7 @@ const SaleProduct = (sequelize, DataTypes) => {
   
     SaleProduct.associate = (models) => {
       SaleProduct.belongsTo(
-        models.sales,
+        models.Sale,
         { 
           foreignKey: 'saleId',
           as: 'Sales',
@@ -35,7 +35,7 @@ const SaleProduct = (sequelize, DataTypes) => {
         }
       );
       SaleProduct.belongsTo(
-        models.products,
+        models.Product,
         { 
           foreignKey: 'productId', 
           as: 'Products', 

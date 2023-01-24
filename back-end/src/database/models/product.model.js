@@ -1,10 +1,10 @@
  const Product = (sequelize, DataTypes) => {
     const Product = sequelize.define('Product', {
         id: {
-            allowNull: false,
-            autoIncrement: true,
-            primaryKey: true,
-            type: DataTypes.INTEGER,
+           allowNull: false,
+           autoIncrement: true,
+           primaryKey: true,
+           type: DataTypes.INTEGER,
          },
          name: {
            allowNull: false,
