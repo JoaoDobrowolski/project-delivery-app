@@ -1,4 +1,4 @@
-const db = require('../database/models');
+const UserModel = require('../../database/models/user.model');
 
 const loginService = {
   validateLogin: (email, password) => {
@@ -6,7 +6,7 @@ const loginService = {
     return {};
   },
   login: async (email, password) => {
-    const user = await db.User.findOne({ where: { email } });
+    const user = await UserModel.findOne({ where: { email } });
     if (!user || user.password !== password) {
       return { message: 'Invalid fields' };
     }
