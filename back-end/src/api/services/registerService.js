@@ -7,7 +7,7 @@ const registerService = {
     if (user !== null) {
      return { message: 'This email is not available' }; 
     }
-    return true;    
+    return {};    
   },
 
   nameAvailability: async (name) => {
@@ -15,7 +15,7 @@ const registerService = {
     if (user !== null) {
      return { message: 'This name is not available' }; 
     }
-    return true;
+    return {};
   },
   
   validateRegister: async (name, email, password) => {
@@ -32,7 +32,7 @@ const registerService = {
     if(emailAvailability.message) return { status: 409, message: emailAvailability.message}   
 
     const nameAvailability = await registerService.nameAvailability(name);
-    if(nameAvailability.message) return { status: 409, message: emailAvailability.message}
+    if(nameAvailability.message) return { status: 409, message: nameAvailability.message}
 
     const role = 'customer';    
     const newUser = await db.User.create({ name, email, password, role})
