@@ -21,13 +21,11 @@ const loginService = {
     
     const user = await loginService.validateUser(email);
     if (user.message) return user;
-    helpers.checkPassword(password, user.password);
 
-    const response = {
-      name: user.name,
-      email: user.email,
-      role: user.role,
-    };
+    const checkPassword = helpers.checkPassword(password, user.password);
+    if (checkPassword.message) return checkPassword;
+
+    const response = { name: user.name, email: user.email, role: user.role };
 
     return response;
   },
