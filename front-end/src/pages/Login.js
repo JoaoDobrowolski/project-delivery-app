@@ -1,39 +1,35 @@
-import React from 'react';
-import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import React, { useState } from 'react';
 
-export default function Login() {
-  const [userEmail, setUserEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const history = useHistory();
+function Login() {
+  const [login, setLogin] = useState({
+    email: '',
+    password: '',
+  });
 
-  const clickLogin = async (e) => {
-    e.preventDefault();
-    const myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
+  const validateEmail = () => {
+    const { email } = login;
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
 
+  const validatePassword = () => {
+    const { password } = login;
+    const NUM = 6;
+    const teste = password.length > NUM;
+    return teste;
+  };
 
-    const fetchUser = async () => {
-      const {email, password} = user;
-      const login = {
-        Method: 'POST',
-        Body: email, password,
-      }
-      await fetch('https://localhost:3001/login', login);
-      Navigate('/login')
-    }
+  const handleChange = ({ id, value }) => {
+    setLogin((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+  };
 
-    const response = await fetch(
-      `${contante.host}/login`,
-      requestOptions
-    );
-    if (response.status === 200) {
-      const data = await response.json(); // { token}
-      localStorage.setItem('token', data.token);
-      Navigate('/home');
-    } else {
-      alert('username or password is incorrect');
-    }
+  const clickLogin = () => {
+    // const { email } = login;
+    // const user = { email };
+    // history.push('/foods'); // mudar rota
   };
 
   return (
@@ -50,7 +46,7 @@ export default function Login() {
             id="email"
             placeholder="Enter your email"
             data-testid="common_login__input-email"
-            onChange={({ target: { value } }) => setUserEmail(value)}
+            onChange={ (event) => handleChange(event.target) }
           />
 
           <input
@@ -58,7 +54,7 @@ export default function Login() {
             placeholder="Enter your password"
             id="password"
             data-testid="common_login__input-password"
-            onChange={({ target: { value } }) => setPassword(value)}
+            onChange={ (event) => handleChange(event.target) }
           />
 
           <button
@@ -89,3 +85,5 @@ export default function Login() {
     </div>
   );
 }
+
+export default Login;
