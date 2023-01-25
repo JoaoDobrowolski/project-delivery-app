@@ -1,3 +1,4 @@
+const md5 = require('md5');
 const validations = require('../validations/validations');
 const db = require('../../database/models');
 
@@ -41,10 +42,12 @@ const registerService = {
       const { status, message } = availabilityTest;
       return { status, message };
     }
-
+    
+    const passwordEncripted = md5(password);        
+   
     const role = 'customer';    
-    // Precisa encriptar a senha pra ir pro banco
-    const newUser = await db.User.create({ name, email, password, role });
+    
+    const newUser = await db.User.create({ name, email, password: passwordEncripted, role });
     
     return newUser;    
   },
