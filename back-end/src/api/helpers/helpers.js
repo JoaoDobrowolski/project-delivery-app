@@ -1,4 +1,5 @@
 const md5 = require('md5');
+const jwt = require('jsonwebtoken');
 
 const validations = {
   validatePassword: (password) => {
@@ -37,6 +38,12 @@ const validations = {
     }
     
     return {};
+  },
+
+  createToken: (payload) => {
+    const token = jwt.sign(payload, 'secret');
+
+    return token;
   },
 };
 
