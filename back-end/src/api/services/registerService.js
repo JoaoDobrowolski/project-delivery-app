@@ -1,5 +1,5 @@
 const md5 = require('md5');
-const validations = require('../validations/validations');
+const helpers = require('../helpers/helpers');
 const db = require('../../database/models');
 
 const registerService = {
@@ -28,20 +28,17 @@ const registerService = {
   },
   
   validateRegister: async (name, email, password) => {
-    const nameValid = validations.validateName(name);
-    if (nameValid.message) return { status: 409, message: nameValid.message };
+    const nameValid = helpers.validateName(name);
+    if (nameValid.message) return nameValid;
 
-    const emailValid = validations.validateEmail(email);
-    if (emailValid.message) return { status: 409, message: emailValid.message };
+    const emailValid = helpers.validateEmail(email);
+    if (emailValid.message) return emailValid;
 
-    const passwordValid = validations.validatePassword(password);
-    if (passwordValid.message) return { status: 409, message: passwordValid.message };         
+    const passwordValid = helpers.validatePassword(password);
+    if (passwordValid.message) return passwordValid;         
     
     const availabilityTest = await registerService.availability(name, email);
-    if (availabilityTest.message) {
-      const { status, message } = availabilityTest;
-      return { status, message };
-    }
+    if (availabilityTest.message) return availabilityTest;
     
     const passwordEncripted = md5(password);        
    

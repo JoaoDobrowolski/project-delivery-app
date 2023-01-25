@@ -27,6 +27,16 @@ const validations = {
     return {};
   },
 
+  validateName: (name) => {    
+    if (name.length < 12) {
+      return {
+        status: 400,
+        message: '"name" length must be at least 12 characters long',
+      };
+    }
+    return {};
+  },
+
   checkPassword: (inputPassword, userPassword) => {
     const passwordHash = md5(inputPassword);
 
