@@ -3,7 +3,7 @@ const validations = {
     if (password.length < 6) {
       return { message: '"password" length must be at least 6 characters long' };
     }
-    return {};
+    return true;
   },
   
   validateEmail: (email) => {
@@ -12,14 +12,14 @@ const validations = {
     if (!emailValidation) {
       return { message: '"email" must be a valid email' };
     }
-    return {};
+    return true;
   },
 
   validateName: (name) => {    
     if (name.length < 12) {
      return { message: '"name" length must be at least 12 characters long' }; 
     }
-    return {};
+    return true;
   },
 };
 
