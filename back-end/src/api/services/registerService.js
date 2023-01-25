@@ -7,7 +7,7 @@ const registerService = {
     if (user !== null) {
      return { message: 'This email is not available' }; 
     }
-    return {};
+    return true;
   },
 
   nameAvailability: async (name) => {
@@ -15,7 +15,7 @@ const registerService = {
     if (user !== null) {
      return { message: 'This name is not available' }; 
     }
-    return {};
+    return true;
   },
   
   validateRegister: async (name, email, password) => {
@@ -24,12 +24,14 @@ const registerService = {
     const passwordValid = validations.validatePassword(password);
     const emailAvailability = await registerService.emailAvailability(email);
     const nameAvailability = await registerService.nameAvailability(email);
-    if (nameValid === emailValid === passwordValid === emailAvailability === nameAvailability) {
-      // const newUser = await db.User.create()
-      console.log('construindo novo usuário no banco de dados');
+    const role = 'customer';
+    if (nameValid && emailValid && passwordValid && emailAvailability && nameAvailability) {
+      const newUser = await db.User.create({ name, email, password, role})
+      console.log('newUser --->', newUser);
+      return newUser;
     }
-    const resp = { nameValid, emailValid, passwordValid, emailAvailability, nameAvailability };
-    return resp;
+    // const resp = { nameValid, emailValid, passwordValid, emailAvailability, nameAvailability };
+    // return resp;
   },
 };
 
