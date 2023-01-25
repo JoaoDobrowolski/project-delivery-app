@@ -15,7 +15,7 @@ function Login() {
   const validatePassword = () => {
     const { password } = login;
     const NUM = 6;
-    const teste = password.length > NUM;
+    const teste = password.length >= NUM;
     return teste;
   };
 
@@ -71,7 +71,7 @@ function Login() {
             id="button-login"
             type="button"
             data-testid="common_login__button-register"
-            // onClick={ () => history.push('/register')}
+          // onClick={ () => history.push('/register')}
           >
             Ainda não tenho conta
           </button>
