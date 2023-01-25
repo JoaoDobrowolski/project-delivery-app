@@ -35,6 +35,7 @@ const registerService = {
     if(nameAvailability.message) return { status: 409, message: nameAvailability.message}
 
     const role = 'customer';    
+    // Precisa encriptar a senha pra ir pro banco
     const newUser = await db.User.create({ name, email, password, role})
     
     return newUser; 
