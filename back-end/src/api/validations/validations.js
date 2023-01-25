@@ -14,6 +14,13 @@ const validations = {
     }
     return {};
   },
+
+  validateName: async (name) => {    
+    if (name.length < 12) {
+     return { message: '"name" length must be at least 12 characters long' }; 
+    }
+    return {};
+  },
 };
 
 module.exports = validations;
