@@ -26,10 +26,20 @@ function Login() {
     }));
   };
 
-  const clickLogin = () => {
-    // const { email } = login;
-    // const user = { email };
-    // history.push('/foods'); // mudar rota
+  const clickLogin = async () => {
+    const options = await {
+      method: 'POST',
+      headers: { Authorization: '', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    };
+
+    fetch('http://localhost:3001/login', options)
+      .then((response) => response.text())
+      .then((response) => console.log(response))
+      .catch((err) => console.error(err));
   };
 
   return (
