@@ -6,6 +6,8 @@ function Login() {
     password: '',
   });
 
+  const [notFound, setNotFound] = useState(false);
+
   const validateEmail = () => {
     const { email } = login;
     const re = /\S+@\S+\.\S+/;
@@ -27,19 +29,43 @@ function Login() {
   };
 
   const clickLogin = async () => {
-    const options = await {
+    const options = {
       method: 'POST',
-      headers: { Authorization: '', 'Content-Type': 'application/json' },
+      headers: { Authorization: 'User not found', 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        email,
-        password,
+        email: email.value,
+        password: password.value,
       }),
     };
 
-    fetch('http://localhost:3001/login', options)
-      .then((response) => response.text())
-      .then((response) => console.log(response))
-      .catch((err) => console.error(err));
+    const notFoundTest = 404;
+
+    try {
+      const response = await fetch('http://localhost:3001/login', options);
+      console.log('teste', response.status);
+      if (response.status === notFoundTest) {
+        console.log('response');
+        setNotFound(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
+    // await fetch('http://localhost:3001/login', options)
+    //   .then((response) => response.text())
+    //   .then((response) => {
+    //     console.log(response);
+    //     if (response.status === notFoundTest) {
+    //       console.log('response');
+    //       setNotFound(true);
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log('teste');
+    //     setNotFound(true);
+    //     console.error(error);
+    //     console.log(notFound);
+    //   });
   };
 
   return (
@@ -86,11 +112,11 @@ function Login() {
             Ainda não tenho conta
           </button>
         </div>
-        {/* <div>
-          {/* <p data-testid="common_login__element-invalid-email">
-            Email inválido
-          </p>
-        </div> */}
+        {
+          notFound
+            ? <p data-testid="common_login__element-invalid-email"> Email inválido </p>
+            : null
+        }
       </div>
     </div>
   );
