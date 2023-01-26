@@ -37,11 +37,11 @@ function ClienteProdutos() {
             key={ products.id }
           >
             <p data-testid={ `customer_products__element-card-price-${products.id}` }>
-              {products.price}
+              {products.price.replace(/\./g, ',')}
 
             </p>
             <img
-              data-testid={ `customer_products__element-card-bg-image-${products.id}` }
+              data-testid={ `customer_products__img-card-bg-image-${products.id}` }
               src={ products.urlImage }
               alt={ `É a foto de ${products.name}` }
             />
@@ -49,6 +49,20 @@ function ClienteProdutos() {
               { products.name }
 
             </p>
+            <button
+              data-testid={ `customer_products__button-card-rm-item-${products.id}` }
+            >
+              -
+            </button>
+            <input
+              type="number"
+              data-testid={ `customer_products__input-card-quantity-${products.id}` }
+            />
+            <button
+              data-testid={ `customer_products__button-card-add-item-${products.id}` }
+            >
+              +
+            </button>
           </div>
         ))) }
     </div>
