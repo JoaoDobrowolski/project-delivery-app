@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 function Login() {
+  const history = useHistory();
+
   const [login, setLogin] = useState({
     email: '',
     password: '',
@@ -39,33 +42,19 @@ function Login() {
     };
 
     const notFoundTest = 404;
+    const loginTest = 200;
 
     try {
       const response = await fetch('http://localhost:3001/login', options);
-      console.log('teste', response.status);
       if (response.status === notFoundTest) {
-        console.log('response');
         setNotFound(true);
+      }
+      if (response.status === loginTest) {
+        history.push('./customer/products');
       }
     } catch (error) {
       console.error(error);
     }
-
-    // await fetch('http://localhost:3001/login', options)
-    //   .then((response) => response.text())
-    //   .then((response) => {
-    //     console.log(response);
-    //     if (response.status === notFoundTest) {
-    //       console.log('response');
-    //       setNotFound(true);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log('teste');
-    //     setNotFound(true);
-    //     console.error(error);
-    //     console.log(notFound);
-    //   });
   };
 
   return (
