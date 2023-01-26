@@ -25,7 +25,9 @@ const loginService = {
     const checkPassword = helpers.checkPassword(password, user.password);
     if (checkPassword.message) return checkPassword;
 
-    const token = helpers.createToken({ name: user.name, email: user.email, role: user.role });
+    const token = helpers.createToken(
+      { name: user.name, email: user.email, role: user.role },
+    );
 
     const response = { name: user.name, email: user.email, role: user.role, token };
 

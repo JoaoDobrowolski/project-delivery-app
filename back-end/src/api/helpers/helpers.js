@@ -1,6 +1,7 @@
+const fs = require('fs');
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
-const fs = require('fs').promises;
+const path = require('path');
 
 const validations = {
   validatePassword: (password) => {
@@ -51,16 +52,11 @@ const validations = {
     return {};
   },
 
-  createToken: async (payload) => {
-    try {
-      const secret = await fs.readFile('../../../jwt.evaluation.key', 'utf-8');
-
-      const token = jwt.sign(payload, secret);
-      
-      return token;
-    } catch (error) {
-      console.error('Error reading jwt secret file.');
-    }
+  createToken: (payload) => {
+    const filePath = path.join(__dirname, '../../../jwt.evaluation.key');
+    const secret = fs.readFileSync(filePath, 'utf-8');    
+    const token = jwt.sign(payload, secret);
+    return token;
   },
 };
 
