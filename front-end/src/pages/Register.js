@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-
 function Register() {
   const history = useHistory();
 
   const [conflicted, setConflicted] = useState(false);
-  
+
   const [register, setRegister] = useState({
     username: '',
     email: '',
@@ -19,21 +18,20 @@ function Register() {
     return re.test(email);
   };
 
-  
   const validatePassword = () => {
     const { password } = register;
     const NUM = 6;
     const teste = password.length >= NUM;
     return teste;
   };
-  
+
   const validateName = () => {
     const { username } = register;
     const NUM = 12;
     const teste = username.length >= NUM;
     return teste;
   };
-  
+
   const handleChange = ({ id, value }) => {
     setRegister((prev) => ({
       ...prev,
@@ -49,15 +47,15 @@ function Register() {
         username: username.value,
         email: email.value,
         password: password.value,
-      }),      
-    };   
+      }),
+    };
 
     const conflictedTest = 409;
     const createdTest = 201;
 
     try {
       const response = await fetch('http://localhost:3001/register', options);
-      
+
       if (response.status === conflictedTest) {
         setConflicted(true);
       }
@@ -68,7 +66,7 @@ function Register() {
       console.error(error);
     }
   };
-  // 
+  //
   return (
     <div>
       <label>
