@@ -30,6 +30,10 @@ function Login() {
       [id]: value,
     }));
   };
+  
+  const LoginToLocalStorage = (userData) => {
+    localStorage.setItem('user', JSON.stringify(userData));
+  };
 
   const clickLogin = async () => {
     const options = {
@@ -46,16 +50,20 @@ function Login() {
 
     try {
       const response = await fetch('http://localhost:3001/login', options);
+      
       if (response.status === notFoundTest) {
         setNotFound(true);
       }
       if (response.status === loginTest) {
+        const json = await response.json();
+        LoginToLocalStorage(json);        
         history.push('./customer/products');
       }
     } catch (error) {
       console.error(error);
     }
   };
+
 
   return (
     <div>

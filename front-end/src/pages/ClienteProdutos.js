@@ -1,9 +1,10 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import Navbar from '../components/NavBar';
 import DeliveryAppContext from '../context/DeliveryAppContext';
 
 function ClienteProdutos() {
 //   const [result, setResult] = useState([]);
+  const [ username, setUsername ] = useState('');
   const { fetchProducts, setFetchProducts } = useContext(DeliveryAppContext);
   const endpoint = 'http://localhost:3001/products';
 
@@ -19,18 +20,25 @@ function ClienteProdutos() {
   const getAPIs = async () => { // requisição à API com o endpoint como parâmetro, pois será decidido apenas após aperta o botão de busca
     const response = await fetch(endpoint);
     const json = await response.json();
-    console.log('json', json);
+    // console.log('json', json);
     // setDoRedirect(true); // irá redirecionar para a tela de detalhes da receita caso apareça apenas uma ao clicar no searchButton
     return json;
   };
 
+  const getLocalStorage = () => {
+    const userData = localStorage.getItem('user');
+    const userDataObj = JSON.parse(userData);    
+    setUsername(userDataObj.name);
+  };
+
   useEffect(async () => {
-    setFetchProducts(await getAPIs());
+    setFetchProducts(await getAPIs());    
+    getLocalStorage();
   }, []);
 
   return (
     <div>
-      <Navbar />
+      <Navbar username={ username } />
       { (
         fetchProducts.map((products) => (
           <div
