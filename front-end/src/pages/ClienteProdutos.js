@@ -1,8 +1,10 @@
 import React, { useEffect, useContext, useState } from 'react';
 import Navbar from '../components/NavBar';
 import DeliveryAppContext from '../context/DeliveryAppContext';
+import { useHistory } from 'react-router-dom';
 
 function ClienteProdutos() {
+  const history = useHistory();
 //   const [result, setResult] = useState([]);
   const [ username, setUsername ] = useState('');
   const { fetchProducts, setFetchProducts } = useContext(DeliveryAppContext);
@@ -38,6 +40,7 @@ function ClienteProdutos() {
 
   const logout = () => {
     localStorage.removeItem('user');
+    history.push('/');    
   };
 
   return (
