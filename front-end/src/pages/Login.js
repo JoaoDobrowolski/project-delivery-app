@@ -96,7 +96,7 @@ function Login() {
             id="button-login"
             type="button"
             data-testid="common_login__button-register"
-          // onClick={ () => history.push('/register')}
+            onClick={ () => history.push('/register')}
           >
             Ainda não tenho conta
           </button>

@@ -42,9 +42,9 @@ const registerService = {
     
     const passwordEncripted = md5(password);        
    
-    const role = 'customer';    
+    // const role = 'customer';    
     
-    const newUser = await db.User.create({ name, email, password: passwordEncripted, role });
+    const newUser = await db.User.create({ name, email, password: passwordEncripted });
     
     return newUser;    
   },
