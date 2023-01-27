@@ -36,9 +36,16 @@ function ClienteProdutos() {
     getLocalStorage();
   }, []);
 
+  const logout = () => {
+    localStorage.removeItem('user');
+  };
+
   return (
     <div>
-      <Navbar username={ username } />
+      <Navbar 
+        username={ username }
+        logout={ logout }
+      />
       { (
         fetchProducts.map((products) => (
           <div
