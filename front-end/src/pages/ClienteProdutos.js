@@ -5,8 +5,8 @@ import { useHistory } from 'react-router-dom';
 
 function ClienteProdutos() {
   const history = useHistory();
-//   const [result, setResult] = useState([]);
-  const [ username, setUsername ] = useState('');
+  //   const [result, setResult] = useState([]);
+  const [username, setUsername] = useState('');
   const { fetchProducts, setFetchProducts } = useContext(DeliveryAppContext);
   const endpoint = 'http://localhost:3001/products';
 
@@ -29,12 +29,12 @@ function ClienteProdutos() {
 
   const getLocalStorage = () => {
     const userData = localStorage.getItem('user');
-    const userDataObj = JSON.parse(userData);    
+    const userDataObj = JSON.parse(userData);
     setUsername(userDataObj.name);
   };
 
   useEffect(async () => {
-    setFetchProducts(await getAPIs());    
+    setFetchProducts(await getAPIs());
     getLocalStorage();
   }, []);
 
@@ -42,7 +42,7 @@ function ClienteProdutos() {
     localStorage.removeItem('user');
     history.push('/');    
   };
-
+  
   return (
     <div>
       <Navbar 
