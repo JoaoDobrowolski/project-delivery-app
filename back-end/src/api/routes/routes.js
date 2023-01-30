@@ -12,6 +12,7 @@ routes.post('/register', registerController.register);
 routes.get('/products', productsController.getAll);
 routes.get('/sellers', sellersController.getAll);
 routes.post('/sales', salesController.createSale);
+routes.get('/sales', salesController.getUserSales);
 // app.delete('/user/me', loginController.validateToken, userController.deleteUser);
 
 module.exports = routes;
