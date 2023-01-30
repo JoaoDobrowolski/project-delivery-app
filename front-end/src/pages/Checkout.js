@@ -45,8 +45,8 @@ function Checkout() {
         <div>
           <p data-testid="customer_checkout__element-order-total-price">
             Total: R$
-            {items.reduce((acc, item) => acc
-            + (Number(item.price) * item.quantity), 0).toFixed(2).replace('.', ',')}
+            { items.reduce((acc, item) => acc
+              + (Number(item.price) * item.quantity), 0).toFixed(2).replace('.', ',') }
           </p>
         </div>
 
@@ -54,4 +54,10 @@ function Checkout() {
     </main>
   );
 }
+
+// Checkout.propTypes = {
+//   username: PropTypes.string.isRequired,
+//   logout: PropTypes.func.isRequired,
+// };
+
 export default Checkout;
