@@ -3,9 +3,11 @@ import Navbar from '../components/NavBar';
 import DeliveryAppContext from '../context/DeliveryAppContext';
 import { useHistory } from 'react-router-dom';
 
-function ClienteProdutos() {
+function ClienteProdutos() {  
   const history = useHistory();
   
+  // const [addItem, setAddItem] = useState([]);
+  // const [removeItem, setRemoveItem] = useState([]);
   const [username, setUsername] = useState('');
   const { fetchProducts, setFetchProducts } = useContext(DeliveryAppContext);
   const endpoint = 'http://localhost:3001/products';
@@ -22,10 +24,25 @@ function ClienteProdutos() {
     const userDataObj = JSON.parse(userData);
     setUsername(userDataObj.name);
   };
+  
+  
+  const storageProducts = async () => {
+    if (!JSON.parse(localStorage.getItem('customerProducts'))) {
+      // const productsQty = (await getAPIs()).forEach((e) => [...e]);
+      localStorage.setItem('customerProducts', JSON.stringify(await getAPIs()));
+    }
+  };
+
+  const addItem = ({ target }) => {
+    const { name } = target;
+    console.log(name);
+
+  };
 
   useEffect(async () => {
     setFetchProducts(await getAPIs());
     getLocalStorage();
+    storageProducts();
   }, []);
 
   const logout = () => {
@@ -45,7 +62,7 @@ function ClienteProdutos() {
             key={ products.id }
           >
             <p data-testid={ `customer_products__element-card-price-${products.id}` }>
-              {products.price.replace(/\./g, ',')}
+              { products.price.replace(/\./, ',') }
 
             </p>
             <img
@@ -58,21 +75,34 @@ function ClienteProdutos() {
 
             </p>
             <button
+              type="button"
               data-testid={ `customer_products__button-card-rm-item-${products.id}` }
             >
               -
             </button>
             <input
+              value={ 0 }
               type="number"
               data-testid={ `customer_products__input-card-quantity-${products.id}` }
             />
             <button
+              name={ products.name }
+              onClick={ (e) => addItem(e) }
+              type="button"
               data-testid={ `customer_products__button-card-add-item-${products.id}` }
             >
               +
             </button>
           </div>
         ))) }
+      <div>
+        <button
+          type="button"
+          data-tesstid="customer_products__button-cart"
+        >
+          <span data-testid="customer_products___checkout-botton-value">preço</span>
+        </button>
+      </div>
     </div>
   );
 }

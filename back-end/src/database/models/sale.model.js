@@ -13,7 +13,7 @@ const Sale = (sequelize, DataTypes) => {
       status: DataTypes.STRING,
     },
     {
-      underscored: true,
+      underscored: false,
       timestamps: false,
       tableName: 'sales',
     },
@@ -22,11 +22,11 @@ const Sale = (sequelize, DataTypes) => {
   Sale.associate = (models) => {
     Sale.belongsTo(
       models.User,
-      { foreignKey: 'userId', as: 'user' },      
+      { foreignKey: 'userId', as: 'user_id' },      
     );
     Sale.belongsTo(
       models.User,
-      { foreignKey: 'sellerId', as: 'sellerUser' },      
+      { foreignKey: 'sellerId', as: 'seller_id' },      
     );
   };
 
