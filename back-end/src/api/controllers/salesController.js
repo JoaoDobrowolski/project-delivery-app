@@ -7,7 +7,7 @@ const salesController = {
   },
   
   getUserSales: async (req, res) => {
-    const userSales = await salesService.getUserSales(req.body);
+    const userSales = await salesService.getUserSales(req.params.id);
     return res.status(200).json(userSales);
   },
 };

@@ -30,7 +30,7 @@ const salesService = {
   },
 
   getUserSales: async (userId) => {
-    const userSales = await db.Sale.findAll({ where: userId });
+    const userSales = await db.Sale.findAll({ where: { userId } });
     
     return userSales;
   },
