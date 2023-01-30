@@ -12,7 +12,7 @@ const salesService = {
   },
 
   createSale: async (saleData) => {
-   const newDate = new Date();
+    const newDate = new Date();
     newDate.setUTCDate(newDate.getUTCDate());
     const sale = await db.Sale.create({
       userId: saleData.userId,

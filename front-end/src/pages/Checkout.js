@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ItemCar from '../components/ItemCar';
 import Navbar from '../components/NavBar';
+import TableHeadCheckout from '../components/TableHeadCheckout';
 
 function Checkout() {
   const [saleProducts, setSaleProducts] = useState([]);
@@ -21,28 +22,34 @@ function Checkout() {
   return (
     <main>
       <Navbar />
-      Finalizar Pedido:
-      <ul>
+      <div className="table-checkout">
+        Finalizar Pedido:
+        <table>
+          <TableHeadCheckout />
+          <tbody>
+            {
+              items.map((item, index) => (
+                <ItemCar
+                  key={ index }
+                  index={ index }
+                  name={ item.name }
+                  price={ Number(item.price) }
+                  quantity={ item.quantity }
+                  removeItem={ () => removeItemCartID(item.productId) }
+                />
+              ))
+            }
+          </tbody>
+        </table>
 
-        {
-          items.map((item, index) => (
-            <ItemCar
-              key={ index }
-              index={ index }
-              name={ item.name }
-              price={ item.price }
-              quantity={ item.quantity }
-              removeItem={ () => removeItemCartID(item.productId) }
-            />
-          ))
-        }
-      </ul>
-      <div>
-        <p data-testid="customer_checkout__element-order-total-price">
-          Total: R$
-          {items.reduce((acc, item) => acc
-            + (item.price * item.quantity), 0).toFixed(2).replace('.', ',')}
-        </p>
+        <div>
+          <p data-testid="customer_checkout__element-order-total-price">
+            Total: R$
+            {items.reduce((acc, item) => acc
+            + (Number(item.price) * item.quantity), 0).toFixed(2).replace('.', ',')}
+          </p>
+        </div>
+
       </div>
     </main>
   );
