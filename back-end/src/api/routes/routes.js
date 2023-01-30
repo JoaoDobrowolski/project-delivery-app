@@ -4,6 +4,7 @@ const registerController = require('../controllers/registerController');
 const productsController = require('../controllers/productsController');
 const salesController = require('../controllers/salesController');
 const sellersController = require('../controllers/sellersController');
+const saleProductsController = require('../controllers/saleProductsController');
 
 const routes = Router();
 
@@ -13,6 +14,7 @@ routes.get('/products', productsController.getAll);
 routes.get('/sellers', sellersController.getAll);
 routes.post('/sales', salesController.createSale);
 routes.get('/sales', salesController.getUserSales);
+routes.get('/saleProducts', saleProductsController.getSaleProducts);
 // app.delete('/user/me', loginController.validateToken, userController.deleteUser);
 
 module.exports = routes;
