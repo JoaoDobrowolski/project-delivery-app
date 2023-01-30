@@ -1,58 +1,100 @@
-.App {
-  align-items: center;
-  background: #0fa36b;
-  color: #464646;
+
+nav {
+  background: #17d88e;
   display: flex;
-  flex-direction: column;
-  font-family: sans-serif;
-  height: 100vh;
-  justify-content: center;
+  justify-content: space-between;
+  padding: 10px;
+  position: fixed;
+  top: 0;
   width: 100%;
 }
 
-.App > .logo {
-  animation: shake 1.5s infinite ease;
-  color: aliceblue;
-  font-family: Montserrat , sans-serif;
-  font-size: 3em;
-  font-weight: 900;
-}
-
-.rocksGlass {
-  animation: shake 1s infinite ease;
-  max-height: 80vh;
-}
-
-@keyframes shake {
-
-  0% {
-    transform: rotate(5deg);
-  }
-
-  50% {
-    transform: rotate(-5deg);
-  }
-
-  100% {
-    transform: rotate(5deg);
-  }
-}
-
-@keyframes clink {
-
-  0% {
-    transform: rotate(-10deg);
-  }
-
-  50% {
-    transform: rotate(20deg);
-  }
-
-  100% {
-    transform: rotate(-10deg);
-  }
-}
-
-NavBar{
+#absolute {
+  position: absolute;
+  bottom: 40px;
+  right: 230px;
   display: flex;
+  align-items: center;
+}
+
+#btn-total {
+  background: #0fa36b;
+  border: none;
+  color: #fff;
+  font-size: 1.5em;
+  font-weight: 900;
+  float: left;
+  position: fixed; /* não defina top/bottom/left/right */
+  width: 220px;
+  height: 40px;
+  align-self: center;
+  padding-top: 8px;
+}
+
+.btn {
+  text-align: center;
+  position: relative;
+  width: 100%;
+}
+
+.product {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 50px;
+  justify-content: center;
+}
+
+/* .product first-child>img {
+width: 50px;
+} */
+
+.product img {
+  height: 250px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  width: 300px;
+  flex-wrap: wrap;
+}
+
+.btn-rm-add {
+background-color: #0fa36b;
+border: 2px solid #0fa36b;
+color: #fff;
+border-radius: 2px;
+transition-property: background-color, border;
+transition-duration: 1s;
+cursor: pointer;
+width: 35px;
+}
+
+.btn-rm-add:hover {
+  background-color: #0d7e53;
+  border: 2px solid #0d7e53;
+  transition-property: background-color, border;
+}
+
+.product input {
+  width: 80px;
+  text-align: center;
+  border: 1px solid rgb(226, 255, 235);
+  background-color: rgb(226, 255, 235);
+  cursor:default;
+}
+
+table {
+  margin-top: 50px;
+}
+
+.table-checkout {
+  margin-top: 40px;
 }

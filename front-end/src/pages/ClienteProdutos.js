@@ -1,8 +1,10 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import ItemProduct from '../components/ItemProduct';
 import Navbar from '../components/NavBar';
 import DeliveryAppContext from '../context/DeliveryAppContext';
 
 function ClienteProdutos() {
+  const [priceTotal, setPriceTotal] = useState(0);
   // const [addItem, setAddItem] = useState([]);
   // const [removeItem, setRemoveItem] = useState([]);
   const { fetchProducts, setFetchProducts } = useContext(DeliveryAppContext);
@@ -35,51 +37,37 @@ function ClienteProdutos() {
   return (
     <div>
       <Navbar />
-      { (
-        fetchProducts.map((products) => (
-          <div
-            key={ products.id }
-          >
-            <p data-testid={ `customer_products__element-card-price-${products.id}` }>
-              { products.price.replace(/\./, ',') }
+      <div className="product">
+        { (
+          fetchProducts.map((product) => (<ItemProduct
+            key={ product.id }
+            id={ product.id }
+            name={ product.name }
+            price={ Number(product.price) }
+            quantity={ product.quantity }
+            addItem={ addItem }
+            urlImage={ product.urlImage }
+            setTotalPrice={ setPriceTotal }
+          />))) }
 
-            </p>
-            <img
-              data-testid={ `customer_products__img-card-bg-image-${products.id}` }
-              src={ products.urlImage }
-              alt={ `É a foto de ${products.name}` }
-            />
-            <p data-testid={ `customer_products__element-card-title-${products.id}` }>
-              { products.name }
-
-            </p>
-            <button
-              type="button"
-              data-testid={ `customer_products__button-card-rm-item-${products.id}` }
-            >
-              -
-            </button>
-            <input
-              value={ 0 }
-              type="number"
-              data-testid={ `customer_products__input-card-quantity-${products.id}` }
-            />
-            <button
-              name={ products.name }
-              onClick={ (e) => addItem(e) }
-              type="button"
-              data-testid={ `customer_products__button-card-add-item-${products.id}` }
-            >
-              +
-            </button>
-          </div>
-        ))) }
+      </div>
       <div>
         <button
           type="button"
           data-tesstid="customer_products__button-cart"
         >
-          <span data-testid="customer_products___checkout-botton-value">preço</span>
+          <div id="absolute">
+            <span
+              id="btn-total"
+              className="btn"
+              data-testid="customer_products___checkout-botton-value"
+            >
+              Total: R$
+              {' '}
+              {priceTotal.toFixed(2).replace('.', ',')}
+            </span>
+
+          </div>
         </button>
       </div>
     </div>

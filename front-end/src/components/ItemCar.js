@@ -4,47 +4,50 @@ import '../App.css';
 
 function ItemCar({ name, price, quantity, index, removeItem }) {
   return (
-    <li>
-      <p
+    <tr>
+      <td
         data-testid={ `customer_checkout__element-order-table-item-number-${index}` }
       >
         {index + 1}
 
-      </p>
-      <p
+      </td>
+      <td
         data-testid={ `customer_checkout__element-order-table-name-${index}` }
       >
         {name}
 
-      </p>
+      </td>
 
-      <p
+      <td
         data-testid={ `customer_checkout__element-order-table-quantity-${index}` }
       >
         {quantity}
 
-      </p>
-      <p
+      </td>
+      <td
         data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
       >
         {price}
 
-      </p>
-      <p
+      </td>
+      <td
         data-testid={ `customer_checkout__element-order-table-sub-total-${index}` }
       >
         {price * quantity}
 
-      </p>
-      <button
-        type="button"
-        onClick={ () => removeItem() }
-        data-testeid={ `customer_checkout__element-order-table-remove-${index}` }
-      >
-        Remover
+      </td>
+      <td>
+        <button
+          type="button"
+          onClick={ () => removeItem() }
+          data-testeid={ `customer_checkout__element-order-table-remove-${index}` }
+        >
+          Remover
 
-      </button>
-    </li>
+        </button>
+
+      </td>
+    </tr>
   );
 }
 
