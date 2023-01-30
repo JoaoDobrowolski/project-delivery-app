@@ -5,25 +5,15 @@ import { useHistory } from 'react-router-dom';
 
 function ClienteProdutos() {
   const history = useHistory();
-  //   const [result, setResult] = useState([]);
+  
   const [username, setUsername] = useState('');
   const { fetchProducts, setFetchProducts } = useContext(DeliveryAppContext);
   const endpoint = 'http://localhost:3001/products';
-
-  // const fetchProducts = async () => {
-  //   const options = { method: 'GET' };
-
-  //   await fetch('http://localhost:3001/products', options)
-  //     .then((response) => response.json())
-  //     .then((response) => console.log(response))
-  //     .catch((err) => console.error(err));
-  // };
+  
 
   const getAPIs = async () => { // requisição à API com o endpoint como parâmetro, pois será decidido apenas após aperta o botão de busca
     const response = await fetch(endpoint);
-    const json = await response.json();
-    // console.log('json', json);
-    // setDoRedirect(true); // irá redirecionar para a tela de detalhes da receita caso apareça apenas uma ao clicar no searchButton
+    const json = await response.json();    
     return json;
   };
 
