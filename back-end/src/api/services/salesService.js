@@ -2,10 +2,9 @@ const db = require('../../database/models');
 
 const salesService = {
   registerProducts: async (saleData, saleId) => {
-    console.log('teste --> ', saleData);
     saleData.saleProducts.forEach(async (product) => {
       await db.SaleProduct.create({
-        saleId: saleId,
+        saleId,
         productId: product.productId,
         quantity: product.quantity,
       });
@@ -13,7 +12,7 @@ const salesService = {
   },
 
   createSale: async (saleData) => {
-   const newDate = new Date();
+    const newDate = new Date();
     newDate.setUTCDate(newDate.getUTCDate());
     const sale = await db.Sale.create({
       userId: saleData.userId,
@@ -27,7 +26,7 @@ const salesService = {
 
     await salesService.registerProducts(saleData, sale.id);
     
-    return sale;
+    return { ...sale.dataValues, saleProducts: saleData.saleProducts };
   },
 };
 

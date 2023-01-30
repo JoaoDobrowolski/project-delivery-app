@@ -31,6 +31,10 @@ function Login() {
     }));
   };
 
+  const LoginToLocalStorage = (userData) => {
+    localStorage.setItem('user', JSON.stringify(userData));
+  };
+
   const clickLogin = async () => {
     const options = {
       method: 'POST',
@@ -50,13 +54,14 @@ function Login() {
         setNotFound(true);
       }
       if (response.status === loginTest) {
+        const json = await response.json();
+        LoginToLocalStorage(json);
         history.push('./customer/products');
       }
     } catch (error) {
       console.error(error);
     }
   };
-
   return (
     <div>
 

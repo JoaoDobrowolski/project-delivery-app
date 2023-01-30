@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router-dom';
 import React, { useEffect, useState, useContext } from 'react';
 import ItemProduct from '../components/ItemProduct';
 import Navbar from '../components/NavBar';
@@ -5,16 +6,24 @@ import DeliveryAppContext from '../context/DeliveryAppContext';
 
 function ClienteProdutos() {
   const [priceTotal, setPriceTotal] = useState(0);
+  const history = useHistory();
+
   // const [addItem, setAddItem] = useState([]);
   // const [removeItem, setRemoveItem] = useState([]);
+  const [username, setUsername] = useState('');
   const { fetchProducts, setFetchProducts } = useContext(DeliveryAppContext);
   const endpoint = 'http://localhost:3001/products';
 
   const getAPIs = async () => { // requisição à API com o endpoint como parâmetro, pois será decidido apenas após aperta o botão de busca
     const response = await fetch(endpoint);
     const json = await response.json();
-    // console.log('json', parseFloat(json[0].price).replace(/\./g, ','));
     return json;
+  };
+
+  const getLocalStorage = () => {
+    const userData = localStorage.getItem('user');
+    const userDataObj = JSON.parse(userData);
+    setUsername(userDataObj.name);
   };
 
   const storageProducts = async () => {
@@ -31,12 +40,21 @@ function ClienteProdutos() {
 
   useEffect(async () => {
     setFetchProducts(await getAPIs());
+    getLocalStorage();
     storageProducts();
   }, []);
 
+  const logout = () => {
+    localStorage.removeItem('user');
+    history.push('/');
+  };
+
   return (
     <div>
-      <Navbar />
+      <Navbar
+        username={ username }
+        logout={ logout }
+      />
       <div className="product">
         { (
           fetchProducts.map((product) => (<ItemProduct
@@ -49,7 +67,6 @@ function ClienteProdutos() {
             urlImage={ product.urlImage }
             setTotalPrice={ setPriceTotal }
           />))) }
-
       </div>
       <div>
         <button
