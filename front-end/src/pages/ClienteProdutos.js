@@ -49,6 +49,10 @@ function ClienteProdutos() {
     history.push('/');
   };
 
+  const randomClick = () => {
+    history.push('/customer/checkout');
+  };
+
   return (
     <div>
       <Navbar
@@ -61,7 +65,7 @@ function ClienteProdutos() {
             key={ product.id }
             id={ product.id }
             name={ product.name }
-            price={ Number(product.price) }
+            price={ Number(product.price).toFixed(2).replace('.', ',') }
             quantity={ product.quantity }
             addItem={ addItem }
             urlImage={ product.urlImage }
@@ -71,7 +75,8 @@ function ClienteProdutos() {
       <div>
         <button
           type="button"
-          data-tesstid="customer_products__button-cart"
+          data-testid="customer_products__button-cart"
+          onClick={ () => randomClick() }
         >
           <div id="absolute">
             <span

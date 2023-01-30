@@ -32,6 +32,10 @@ function ItemProduct({ id, name, price, urlImage, setTotalPrice }) {
     }
   };
 
+  const handleTarget = ({ value }) => {
+    setQuantity(value);
+  };
+
   return (
     <div>
       <div
@@ -63,7 +67,7 @@ function ItemProduct({ id, name, price, urlImage, setTotalPrice }) {
           </button>
 
           <input
-            readOnly
+            onChange={ (e) => handleTarget(e.target) }
             value={ quantity }
             type="number"
             data-testid={ `customer_products__input-card-quantity-${id}` }
