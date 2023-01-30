@@ -1,20 +1,31 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import Navbar from '../components/NavBar';
 import DeliveryAppContext from '../context/DeliveryAppContext';
+import { useHistory } from 'react-router-dom';
 
-function ClienteProdutos() {
+function ClienteProdutos() {  
+  const history = useHistory();
+  
   // const [addItem, setAddItem] = useState([]);
   // const [removeItem, setRemoveItem] = useState([]);
+  const [username, setUsername] = useState('');
   const { fetchProducts, setFetchProducts } = useContext(DeliveryAppContext);
   const endpoint = 'http://localhost:3001/products';
+  
 
   const getAPIs = async () => { // requisição à API com o endpoint como parâmetro, pois será decidido apenas após aperta o botão de busca
     const response = await fetch(endpoint);
-    const json = await response.json();
-    // console.log('json', parseFloat(json[0].price).replace(/\./g, ','));
+    const json = await response.json();    
     return json;
   };
 
+  const getLocalStorage = () => {
+    const userData = localStorage.getItem('user');
+    const userDataObj = JSON.parse(userData);
+    setUsername(userDataObj.name);
+  };
+  
+  
   const storageProducts = async () => {
     if (!JSON.parse(localStorage.getItem('customerProducts'))) {
       // const productsQty = (await getAPIs()).forEach((e) => [...e]);
@@ -25,16 +36,26 @@ function ClienteProdutos() {
   const addItem = ({ target }) => {
     const { name } = target;
     console.log(name);
+
   };
 
   useEffect(async () => {
     setFetchProducts(await getAPIs());
+    getLocalStorage();
     storageProducts();
   }, []);
 
+  const logout = () => {
+    localStorage.removeItem('user');
+    history.push('/');    
+  };
+  
   return (
     <div>
-      <Navbar />
+      <Navbar 
+        username={ username }
+        logout={ logout }
+      />
       { (
         fetchProducts.map((products) => (
           <div
