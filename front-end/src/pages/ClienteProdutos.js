@@ -1,21 +1,20 @@
 import React, { useEffect, useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Navbar from '../components/NavBar';
 import DeliveryAppContext from '../context/DeliveryAppContext';
-import { useHistory } from 'react-router-dom';
 
-function ClienteProdutos() {  
+function ClienteProdutos() {
   const history = useHistory();
-  
+
   // const [addItem, setAddItem] = useState([]);
   // const [removeItem, setRemoveItem] = useState([]);
   const [username, setUsername] = useState('');
   const { fetchProducts, setFetchProducts } = useContext(DeliveryAppContext);
   const endpoint = 'http://localhost:3001/products';
-  
 
   const getAPIs = async () => { // requisição à API com o endpoint como parâmetro, pois será decidido apenas após aperta o botão de busca
     const response = await fetch(endpoint);
-    const json = await response.json();    
+    const json = await response.json();
     return json;
   };
 
@@ -24,8 +23,7 @@ function ClienteProdutos() {
     const userDataObj = JSON.parse(userData);
     setUsername(userDataObj.name);
   };
-  
-  
+
   const storageProducts = async () => {
     if (!JSON.parse(localStorage.getItem('customerProducts'))) {
       // const productsQty = (await getAPIs()).forEach((e) => [...e]);
@@ -36,7 +34,6 @@ function ClienteProdutos() {
   const addItem = ({ target }) => {
     const { name } = target;
     console.log(name);
-
   };
 
   useEffect(async () => {
@@ -47,12 +44,12 @@ function ClienteProdutos() {
 
   const logout = () => {
     localStorage.removeItem('user');
-    history.push('/');    
+    history.push('/');
   };
-  
+
   return (
     <div>
-      <Navbar 
+      <Navbar
         username={ username }
         logout={ logout }
       />
