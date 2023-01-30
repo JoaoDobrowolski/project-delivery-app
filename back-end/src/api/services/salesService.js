@@ -28,6 +28,12 @@ const salesService = {
     
     return { ...sale.dataValues, saleProducts: saleData.saleProducts };
   },
+
+  getUserSales: async (userId) => {
+    const userSales = await db.Sale.findAll({ where: userId });
+    
+    return userSales;
+  },
 };
 
 module.exports = salesService;
