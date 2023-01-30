@@ -11,7 +11,7 @@ const routes = Router();
 routes.post('/login', loginController.login);
 routes.post('/register', registerController.register);
 routes.get('/products', productsController.getAll);
-// routes.get('/sellers/:id', sellersController.getById);
+routes.get('/sellers/:id', sellersController.getById);
 routes.get('/sellers', sellersController.getAll);
 routes.post('/sales', salesController.createSale);
 routes.get('/sales/:id', salesController.getUserSales);
