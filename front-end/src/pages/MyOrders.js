@@ -24,12 +24,6 @@ function MyOrders() {
     const user = JSON.parse(localStorage.getItem('user'));
     setUsername(user.name);
   };
-
-  const logout = () => {
-    localStorage.removeItem('user');
-    history.push('/');
-  };
-
   const redirectToOrderDetails = (event) => {
     const { id } = event.target;
     history.push(`/customer/orders/${id}`);
@@ -46,7 +40,6 @@ function MyOrders() {
     <div>
       <Navbar
         username={ username }
-        logout={ logout }
       />
       <main>
         <div>

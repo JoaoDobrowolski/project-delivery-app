@@ -1,5 +1,3 @@
-import { useHistory } from 'react-router-dom';
-
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/NavBar';
 
@@ -7,7 +5,6 @@ const idCheck = 1;
 const sellerName = 'Fulano Teste';
 
 function CustomerOrderDetails() {
-  const history = useHistory();
   const [username, setUsername] = useState('');
   const [products, setProducts] = useState([]);
 
@@ -19,10 +16,6 @@ function CustomerOrderDetails() {
     setProducts(saleDataObj);
     setUsername(userDataObj.name);
   };
-  const logout = () => {
-    localStorage.removeItem('user');
-    history.push('/');
-  };
 
   useEffect(async () => {
     getLocalStorage();
@@ -32,7 +25,6 @@ function CustomerOrderDetails() {
     <div>
       <Navbar
         username={ username }
-        logout={ logout }
       />
       <table>
         <thead>
