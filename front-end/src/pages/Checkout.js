@@ -11,7 +11,6 @@ function Checkout() {
   const [username, setUser] = useState('');
   const [userId, setUserId] = useState();
   const [sellerId, setSellerId] = useState();
-  const [totalPrice, setTotalPrice] = useState();
   const [address, setAddress] = useState('');
   const [number, setNumber] = useState('');
   const [sellers, setSellers] = useState([]);
@@ -38,12 +37,26 @@ function Checkout() {
     setSaleProducts(newItems);
   };
 
+  const somaTotal = (items) => {
+    const total = items.reduce((acc, item) => acc
+    + (Number(item.price) * item.quantity), 0).toFixed(2).replace('.', ',');
+
+    return total;
+  };
+
+  const somaTotal2 = (items) => {
+    const total = items.reduce((acc, item) => acc
+    + (Number(item.price) * item.quantity), 0).toFixed(2);
+
+    return total;
+  };
+
   const finishOrder = async () => {
     const reqBody = {
       userId,
       sellerId,
-      totalPrice,
-      saleProducts: saleProducts.saleProducts,
+      totalPrice: parseFloat(somaTotal2(saleProducts)),
+      saleProducts,
       deliveryAddress: address,
       deliveryNumber: number,
     };
@@ -54,33 +67,23 @@ function Checkout() {
       body: JSON.stringify(reqBody),
     };
 
-    console.log('reqBody --> ', reqBody);
-    console.log('saleProducts --> ', saleProducts);
-    console.log('address --> ', address);
-    console.log('number --> ', number);
-    const result = await fetch('http://localhost:3001/sales', options);
-    console.log('result --> ', result);
-
-    // const notFoundTest = 404;
-    // const created = 201;
-    // try {
-    //   if (result.status === created) {
-    //     history.push(`./customer/orders/${result.id}`);
-    //     return result.json();
-    //   }
-    // } catch (error) {
-    //   console.log(notFoundTest);
-    // }
+    const notFoundTest = 404;
+    try {
+      const result = await fetch('http://localhost:3001/sales', options);
+      const json = await result.json();
+      if (result) {
+        history.push(`/customer/orders/${json.id}`);
+        return result;
+      }
+    } catch (error) {
+      console.log(notFoundTest);
+    }
   };
-
-  const somaTotal = (items) => items.reduce((acc, item) => acc
-      + (Number(item.price) * item.quantity), 0).toFixed(2).replace('.', ',');
 
   return (
     <main>
       <Navbar
         username={ username }
-        // logout={ () => localStorage.user.clear() }
       />
       <div className="table-checkout">
         Finalizar Pedido:
@@ -167,10 +170,5 @@ function Checkout() {
     </main>
   );
 }
-
-// Checkout.propTypes = {
-//   username: PropTypes.string.isRequired,
-//   logout: PropTypes.func.isRequired,
-// };
 
 export default Checkout;
