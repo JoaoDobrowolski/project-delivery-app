@@ -5,7 +5,7 @@ function OrderCard({ index, status, date, price, redirectToOrderDetails }) {
   return (
     <div
       id={ index }
-      onClick={ () => redirectToOrderDetails()  }
+      onClick={ () => redirectToOrderDetails() }
     >
       <p
         data-testid={ `customer_orders__element-order-id-${index}` }

@@ -10,18 +10,10 @@ function MyOrders() {
 
   const endpoint = 'http://localhost:3001/sales/';
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await getOrders();
-    };
-    fetchData();
-    getUsername();
-  }, []);
-
   const getOrders = async () => {
     const user = JSON.parse(localStorage.getItem('user'));
     const response = await fetch(`${endpoint}${user.id}`);
-    const data = await response.json();    
+    const data = await response.json();
     setSales(data);
   };
 
@@ -40,6 +32,13 @@ function MyOrders() {
     history.push(`/customer/orders/${id}`);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      await getOrders();
+    };
+    fetchData();
+    getUsername();
+  }, []);
   return (
     <div>
       <Navbar
@@ -55,13 +54,13 @@ function MyOrders() {
                 index={ sale.id }
                 status={ sale.status }
                 date={ sale.saleDate }
-                price={ sale.price }  
+                price={ sale.price }
                 redirectToOrderDetails={ (event) => redirectToOrderDetails(event) }
               />
             ))
           }
         </div>
-      </main> 
+      </main>
 
     </div>
   );

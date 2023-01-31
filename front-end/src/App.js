@@ -7,7 +7,6 @@ import ClienteProdutos from './pages/ClienteProdutos';
 import Checkout from './pages/Checkout';
 import CustomerOrderDetails from './pages/CustomerOrderDetails';
 import MyOrders from './pages/MyOrders';
-import CustomerOrderDetails from './pages/CustomerOrderDetails';
 
 export default function App() {
   return (
