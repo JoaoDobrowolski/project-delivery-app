@@ -66,7 +66,7 @@ function Login() {
     <div>
 
       <div>
-        <div>
+        <div className="container">
           <div>
             <p>Sign in</p>
           </div>
