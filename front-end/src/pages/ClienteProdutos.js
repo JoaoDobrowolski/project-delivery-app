@@ -74,6 +74,7 @@ function ClienteProdutos() {
       </div>
       <div>
         <button
+          disabled={ priceTotal === 0 }
           type="button"
           data-testid="customer_products__button-cart"
           onClick={ () => randomClick() }
