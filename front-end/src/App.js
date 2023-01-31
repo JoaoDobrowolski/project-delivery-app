@@ -7,7 +7,7 @@ import ClienteProdutos from './pages/ClienteProdutos';
 import Checkout from './pages/Checkout';
 import CustomerOrderDetails from './pages/CustomerOrderDetails';
 import MyOrders from './pages/MyOrders';
-import SellerOrders from './pages/SellerOrders.js';
+import SellerOrders from './pages/SellerOrders';
 
 export default function App() {
   return (
