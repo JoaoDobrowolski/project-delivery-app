@@ -38,7 +38,7 @@ function CustomerOrderDetails() {
         <thead>
           <th
             data-testid={
-              `customer_order_details__element-order-details-label-order-${idCheck}`
+              `customer_order_details__element-order-details-label-order-${idCheck}` // ok
             }
           >
             Pedido - placeholder id do pedido
@@ -46,14 +46,14 @@ function CustomerOrderDetails() {
           </th>
           <th
             data-testid={
-              `customer_order_details__element-order-details-label-seller-${sellerName}`
+              `customer_order_details__element-order-details-label-seller-${sellerName}` // ok
             }
           >
             P. Vend: - placeholder nome do(a) vendedor(a)
 
           </th>
           <th
-            data-testid="customer_order_details__element-order-details-label-order-date"
+            data-testid="customer_order_details__element-order-details-label-order-date" // ok
           >
             Placeholder - Data
 
@@ -61,15 +61,13 @@ function CustomerOrderDetails() {
           <th
             data-testid={ `
             customer_order_details__element-order-details-label-delivery-status${idCheck}
-            ` }
+            ` } // talvez precise de status- , mas no figma n tem
           >
             Status Pedido - placeholder entregue ou não
 
           </th>
           <button
-            data-testid={ `
-            customer_order_details__element-order-details-button-delivery-check
-              ` }
+            data-testid="customer_order_details__button-delivery-check " // ok
           >
             Placeholder - Marcar como Entregue
 
@@ -89,28 +87,28 @@ function CustomerOrderDetails() {
               <tr key={ i }>
                 <td
                   data-testid={
-                    `customer_checkout__element-order-table-item-number-${i}`
+                    `customer_order_details__element-order-table-item-number-${i}`
                   }
                 >
                   {i + 1}
                 </td>
                 <td
                   data-testid={
-                    `customer_checkout__element-order-table-name-${i}`
+                    `customer_order_details__element-order-table-name-${i}`
                   }
                 >
                   {name}
                 </td>
                 <td
                   data-testid={
-                    `customer_checkout__element-order-table-quantity-${i}`
+                    `customer_order_details__element-order-table-quantity-${i}`
                   }
                 >
                   {quantity}
                 </td>
                 <td
                   data-testid={
-                    `customer_checkout__element-order-table-unit-price-${i}`
+                    `customer_order_details__element-order-table-unit-price-${i}`
                   }
                 >
                   {price.toFixed(2).replace('.', ',')}
@@ -118,19 +116,20 @@ function CustomerOrderDetails() {
                 <div>
                   <p
                     data-testid={
-                      `customer_checkout__element-order-table-sub-total-${i}`
+                      `customer_order_details__element-order-table-sub-total-${i}`
                     }
                   >
                     { (price * quantity).toFixed(2).replace('.', ',')}
-                    {/* { products
-                      .reduce((acc, prod) => acc
-              + (Number(prod.price) * prod.quantity), 0).toFixed(2).replace('.', ',') }
-               */}
                   </p>
                 </div>
               </tr>
             );
           })}
+          <p data-testid="customer_order_details__element-order-total-price">
+            Total: R$
+            { products.reduce((acc, item) => acc
+              + (Number(item.price) * item.quantity), 0).toFixed(2).replace('.', ',') }
+          </p>
         </tbody>
       </table>
     </div>
