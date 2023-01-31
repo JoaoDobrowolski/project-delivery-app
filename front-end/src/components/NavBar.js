@@ -13,8 +13,6 @@ function Navbar({ username }) {
 
   return (
     <nav className="navbar-teste">
-      {/* <div data-testid="customer_products__element-navbar-link-products">Produtos</div> */}
-      {/* <div data-testid="customer_products__element-navbar-link-orders">Meus Pedidos</div> */}
       <button
         data-testid="customer_products__element-navbar-link-products"
         onClick={ () => history.push('/customer/products') }
