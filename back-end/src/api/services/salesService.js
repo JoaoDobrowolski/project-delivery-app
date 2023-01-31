@@ -42,9 +42,6 @@ const salesService = {
   },
 
   updateStatus: async (saleId, saleStatus) => {
-    console.log('saleId --> ', saleId);
-    console.log('saleStatus --> ', saleStatus);
-    
     const updateStatus = await db.Sale.update(saleStatus, { where: { id: saleId } });
     
     return updateStatus;
