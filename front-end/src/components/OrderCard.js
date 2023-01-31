@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function OrderCard({ index, status, date, price, redirectToOrderDetails }) {
+// <div
+//       // id={ index }
+//       // onClick={ () => redirectToOrderDetails() }
+//     ></div>
+function OrderCard({ index, status, date, price }) {
   return (
-    <div
-      id={ index }
-      onClick={ () => redirectToOrderDetails() }
-    >
+    <div>
       <p
         data-testid={ `customer_orders__element-order-id-${index}` }
       >
@@ -36,7 +37,7 @@ OrderCard.propTypes = {
   status: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
-  redirectToOrderDetails: PropTypes.func.isRequired,
+  // redirectToOrderDetails: PropTypes.func.isRequired,
 };
 
 export default OrderCard;
