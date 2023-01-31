@@ -32,10 +32,28 @@ function ItemProduct({ id, name, price, urlImage, setTotalPrice }) {
     }
   };
 
-  const handleTarget = ({ value }) => {
-    setQuantity(value);
+  const handleChange = (e) => {
+    const { value } = e.target;
+    const newQuantity = Number(value);
+    const oldQuantity = quantity;
+    setQuantity(newQuantity);
+    if (newQuantity > oldQuantity) {
+      const quantityDiference = newQuantity - oldQuantity;
+      setTotalPrice((prev) => prev + (price * quantityDiference));
+    } else {
+      const quantityDiference = oldQuantity - newQuantity;
+      setTotalPrice((prev) => prev - (price * quantityDiference));
+    }
+    const cart = JSON.parse(localStorage.getItem('saleProducts')) || [];
+    const productIndex = cart.findIndex((item) => item.productId === id);
+    if (productIndex !== magicNumber) {
+      cart[productIndex].quantity = Number(value);
+    } else {
+      cart.push({ productId: id, name, price, quantity: Number(value) });
+    }
+    localStorage.setItem('saleProducts', JSON.stringify(cart));
   };
-
+  console.log('teste');
   return (
     <div>
       <div
@@ -49,7 +67,7 @@ function ItemProduct({ id, name, price, urlImage, setTotalPrice }) {
         />
         <p data-testid={ `customer_products__element-card-price-${id}` }>
           R$
-          { price }
+          { price.toFixed(2).replace('.', ',') }
 
         </p>
         <p data-testid={ `customer_products__element-card-title-${id}` }>
@@ -67,7 +85,7 @@ function ItemProduct({ id, name, price, urlImage, setTotalPrice }) {
           </button>
 
           <input
-            onChange={ (e) => handleTarget(e.target) }
+            onChange={ (e) => handleChange(e) }
             value={ quantity }
             type="number"
             data-testid={ `customer_products__input-card-quantity-${id}` }

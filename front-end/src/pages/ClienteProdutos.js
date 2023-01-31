@@ -5,16 +5,16 @@ import Navbar from '../components/NavBar';
 import DeliveryAppContext from '../context/DeliveryAppContext';
 
 function ClienteProdutos() {
-  const [priceTotal, setPriceTotal] = useState(0);
   const history = useHistory();
 
-  // const [addItem, setAddItem] = useState([]);
-  // const [removeItem, setRemoveItem] = useState([]);
+  const [priceTotal, setPriceTotal] = useState(0);
   const [username, setUsername] = useState('');
+
   const { fetchProducts, setFetchProducts } = useContext(DeliveryAppContext);
+
   const endpoint = 'http://localhost:3001/products';
 
-  const getAPIs = async () => { // requisição à API com o endpoint como parâmetro, pois será decidido apenas após aperta o botão de busca
+  const getAPIs = async () => {
     const response = await fetch(endpoint);
     const json = await response.json();
     return json;
@@ -65,7 +65,7 @@ function ClienteProdutos() {
             key={ product.id }
             id={ product.id }
             name={ product.name }
-            price={ Number(product.price).toFixed(2).replace('.', ',') }
+            price={ Number(product.price) }
             quantity={ product.quantity }
             addItem={ addItem }
             urlImage={ product.urlImage }
@@ -78,15 +78,17 @@ function ClienteProdutos() {
           data-testid="customer_products__button-cart"
           onClick={ () => randomClick() }
         >
-          <div id="absolute">
+          <div
+            id="absolute"
+          >
             <span
               id="btn-total"
               className="btn"
-              data-testid="customer_products___checkout-botton-value"
+              data-testid="customer_products__checkout-bottom-value"
             >
               Total: R$
-              {' '}
-              {priceTotal.toFixed(2).replace('.', ',')}
+              { ' ' }
+              { priceTotal.toFixed(2).replace('.', ',') }
             </span>
 
           </div>

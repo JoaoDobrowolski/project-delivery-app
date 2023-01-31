@@ -32,6 +32,12 @@ const salesService = {
   getUserSales: async (userId) => {
     const userSales = await db.Sale.findAll({ where: { userId } });
     
+    if (userSales.length === 0) {
+      const sellerSales = await db.Sale.findAll({ where: { sellerId: userId } });
+
+      return sellerSales;
+    }
+    
     return userSales;
   },
 };

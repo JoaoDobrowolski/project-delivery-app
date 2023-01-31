@@ -29,7 +29,7 @@ const loginService = {
       { name: user.name, email: user.email, role: user.role },
     );
 
-    const response = { name: user.name, email: user.email, role: user.role, token };
+    const response = { name: user.name, email: user.email, role: user.role, token, id: user.id };
 
     return response;
   },
