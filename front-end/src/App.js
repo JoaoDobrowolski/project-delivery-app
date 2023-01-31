@@ -7,6 +7,7 @@ import ClienteProdutos from './pages/ClienteProdutos';
 import Checkout from './pages/Checkout';
 import CustomerOrderDetails from './pages/CustomerOrderDetails';
 import MyOrders from './pages/MyOrders';
+import SellerOrders from './pages/SellerOrders.js';
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
         <Route exact path="/customer/checkout" component={ Checkout } />
         <Route exact path="/customer/orders" component={ MyOrders } />
         <Route exact path="/customer/orders/:id" component={ CustomerOrderDetails } />
+        <Route exact path="/seller/orders" component={ SellerOrders } />
       </Switch>
     </div>
   );

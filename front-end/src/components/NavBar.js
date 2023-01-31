@@ -11,21 +11,49 @@ function Navbar({ username }) {
     history.push('/');
   };
 
+  const getRole = () => JSON.parse(localStorage.getItem('user')).role;
+
   return (
     <nav className="navbar-teste">
-      <button
-        data-testid="customer_products__element-navbar-link-products"
-        onClick={ () => history.push('/customer/products') }
-      >
-        Produtos
-      </button>
-      <button
-        data-testid="customer_products__element-navbar-link-orders"
-        onClick={ () => history.push('/customer/orders') }
-      >
-        Meus Pedidos
-      </button>
-      <p data-testid="customer_products__element-navbar-user-full-name">{ username }</p>
+      {
+        getRole() === 'customer' && (
+          <>
+            <button
+              data-testid="customer_products__element-navbar-link-products"
+              onClick={ () => history.push('/customer/products') }
+            >
+              Produtos
+            </button>
+            <button
+              data-testid="customer_products__element-navbar-link-orders"
+              onClick={ () => history.push('/customer/orders') }
+            >
+              Meus Pedidos
+            </button>
+          </>
+        )
+      }
+      {
+        getRole() === 'seller' && (
+          <button
+            data-testid="customer_products__element-navbar-link-orders"
+            onClick={ () => history.push('/seller/orders') }
+          >
+            Pedidos
+          </button>
+        )
+      }
+      {
+        getRole() === 'administrator' && (
+          <button
+            data-testid="customer_products__element-navbar-link-orders"
+            onClick={ () => history.push('/admin/manage') }
+          >
+            Gerenciar Usuários
+          </button>
+        )
+      }
+      <p data-testid="customer_products__element-navbar-user-full-name">{username}</p>
       <button
         data-testid="customer_products__element-navbar-link-logout"
         onClick={ () => logout() }
@@ -35,7 +63,6 @@ function Navbar({ username }) {
     </nav>
   );
 }
-
 Navbar.propTypes = {
   username: PropTypes.string.isRequired,
 };
