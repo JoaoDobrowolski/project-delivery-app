@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/NavBar';
 
-const placeholderIdCheckout = 1;
-const placeHolderSellerName = 'Fulano Teste';
+const idCheck = 1;
+const sellerName = 'Fulano Teste';
 
 function CustomerOrderDetails() {
   const history = useHistory();
@@ -37,15 +37,17 @@ function CustomerOrderDetails() {
       <table>
         <thead>
           <th
-            data-testid={ `customer_order_details__element-order-details-label-order-
-              ${placeholderIdCheckout}` }
+            data-testid={
+              `customer_order_details__element-order-details-label-order-${idCheck}`
+            }
           >
             Pedido - placeholder id do pedido
 
           </th>
           <th
-            data-testid={ `customer_order_details__element-order-details-label-seller-
-              ${placeHolderSellerName}` }
+            data-testid={
+              `customer_order_details__element-order-details-label-seller-${sellerName}`
+            }
           >
             P. Vend: - placeholder nome do(a) vendedor(a)
 
@@ -58,8 +60,8 @@ function CustomerOrderDetails() {
           </th>
           <th
             data-testid={ `
-            customer_order_details__element-order-details-label-delivery-status
-              ${placeholderIdCheckout}` }
+            customer_order_details__element-order-details-label-delivery-status${idCheck}
+            ` }
           >
             Status Pedido - placeholder entregue ou não
 
