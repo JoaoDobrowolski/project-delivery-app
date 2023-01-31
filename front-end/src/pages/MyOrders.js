@@ -35,6 +35,11 @@ function MyOrders() {
     history.push('/');
   };
 
+  const redirectToOrderDetails = (event) => {
+    const { id } = event.target;
+    history.push(`/customer/orders/${id}`);
+  };
+
   return (
     <div>
       <Navbar
@@ -51,6 +56,7 @@ function MyOrders() {
                 status={ sale.status }
                 date={ sale.saleDate }
                 price={ sale.price }  
+                redirectToOrderDetails={ (event) => redirectToOrderDetails(event) }
               />
             ))
           }
