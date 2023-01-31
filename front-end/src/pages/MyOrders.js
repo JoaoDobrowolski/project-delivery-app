@@ -12,8 +12,11 @@ function MyOrders() {
 
   const getOrders = async () => {
     const user = JSON.parse(localStorage.getItem('user'));
+    console.log(`${endpoint}${user.id}`);
     const response = await fetch(`${endpoint}${user.id}`);
+    console.log('response', response);
     const data = await response.json();
+    console.log('data', data);
     setSales(data);
   };
 
@@ -54,7 +57,7 @@ function MyOrders() {
                 index={ sale.id }
                 status={ sale.status }
                 date={ sale.saleDate }
-                price={ sale.price }
+                price={ sale.totalPrice }
                 redirectToOrderDetails={ (event) => redirectToOrderDetails(event) }
               />
             ))
