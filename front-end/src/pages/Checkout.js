@@ -8,20 +8,26 @@ function Checkout() {
   const history = useHistory();
 
   const [saleProducts, setSaleProducts] = useState([]);
-  const [username, setUser] = useState({});
+  const [username, setUser] = useState('');
   const [address, setAddress] = useState('');
   const [number, setNumber] = useState('');
+  const [sellers, setSellers] = useState([]);
+
+  const getSellers = async () => {
+    const allSellers = await fetch('http://localhost:3001/sellers');
+    const json = await allSellers.json();
+    setSellers(json);
+  };
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem('saleProducts'));
     setSaleProducts(items);
-    setUser(JSON.parse(localStorage.getItem('user')));
-    console.log(username);
-    console.log(saleProducts);
+    const getUser = JSON.parse(localStorage.getItem('user'));
+    setUser(getUser.name);
+    getSellers();
   }, []);
 
   const removeItemCartID = (id) => {
-    console.log('id', id);
     const newItems = saleProducts.filter((item) => item.productId !== id);
     localStorage.setItem('saleProducts', JSON.stringify(newItems));
     setSaleProducts(newItems);
@@ -45,7 +51,9 @@ function Checkout() {
     const notFoundTest = 404;
     const created = 201;
     try {
+      console.log('options --> ', options);
       const result = await fetch('http://localhost:3001/sales', options);
+      console.log('result --> ', result);
       if (result.status === created) {
         history.push(`./customer/orders/${result.id}`);
         return result.json();
@@ -59,7 +67,7 @@ function Checkout() {
   return (
     <main>
       <Navbar
-        username={ username.name }
+        username={ username }
         // logout={ () => localStorage.user.clear() }
       />
       <div className="table-checkout">
@@ -96,11 +104,20 @@ function Checkout() {
       <div>
         <label htmlFor="seller">
           Vendedor responsavel:
-          <input
-            type="text"
+          <select
+            type="select"
             data-testid="customer_checkout__select-seller"
             id="seller"
-          />
+          >
+            {sellers.map((seller) => (
+              <option
+                value={ seller.name }
+                key={ seller.id }
+              >
+                { seller.name }
+              </option>
+            ))}
+          </select>
         </label>
 
         <label htmlFor="address">
@@ -130,7 +147,7 @@ function Checkout() {
       <button
         type="button"
         data-testid="customer_checkout__button-submit-order"
-        onClick={ finishOrder() }
+        onClick={ () => finishOrder() }
       >
         Finalizar Pedido
       </button>
