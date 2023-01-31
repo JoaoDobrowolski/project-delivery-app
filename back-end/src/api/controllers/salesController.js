@@ -10,6 +10,11 @@ const salesController = {
     const userSales = await salesService.getUserSales(req.params.id);
     return res.status(200).json(userSales);
   },
+
+  updateStatus: async (req, res) => {
+    const updateStatus = await salesService.updateStatus(req.params.id, req.body);
+    return res.status(200).json(updateStatus);
+  },
 };
 
 module.exports = salesController;

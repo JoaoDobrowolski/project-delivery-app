@@ -15,6 +15,7 @@ routes.get('/sellers/:id', sellersController.getById);
 routes.get('/sellers', sellersController.getAll);
 routes.post('/sales', salesController.createSale);
 routes.get('/sales/:id', salesController.getUserSales);
+routes.put('/sales/:id', salesController.updateStatus);
 routes.get('/saleProducts/:id', saleProductsController.getSaleProducts);
 // app.delete('/user/me', loginController.validateToken, userController.deleteUser);
 
