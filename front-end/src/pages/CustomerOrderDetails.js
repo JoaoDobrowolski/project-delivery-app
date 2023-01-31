@@ -134,6 +134,7 @@ function CustomerOrderDetails() {
       </table>
     </div>
 
+  );
 }
 
 export default CustomerOrderDetails;
