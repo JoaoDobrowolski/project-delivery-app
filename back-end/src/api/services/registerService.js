@@ -27,7 +27,7 @@ const registerService = {
     return false; 
   },
   
-  validateRegister: async (name, email, password) => {
+  validateRegister: async (name, email, password, role) => {
     const nameValid = helpers.validateName(name);
     if (nameValid.message) return nameValid;
 
@@ -44,7 +44,7 @@ const registerService = {
    
     // const role = 'customer';    
     
-    const newUser = await db.User.create({ name, email, password: passwordEncripted });
+    const newUser = await db.User.create({ name, email, password: passwordEncripted, role });
     
     return newUser;    
   },
