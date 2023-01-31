@@ -40,7 +40,7 @@ function ItemCar({ name, price, quantity, index, removeItem }) {
         <button
           type="button"
           onClick={ () => removeItem() }
-          data-testeid={ `customer_checkout__element-order-table-remove-${index}` }
+          data-testid={ `customer_checkout__element-order-table-remove-${index}` }
         >
           Remover
 

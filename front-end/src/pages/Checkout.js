@@ -8,59 +8,82 @@ function Checkout() {
   const history = useHistory();
 
   const [saleProducts, setSaleProducts] = useState([]);
-  const [username, setUser] = useState({});
+  const [username, setUser] = useState('');
+  const [userId, setUserId] = useState();
+  const [sellerId, setSellerId] = useState();
   const [address, setAddress] = useState('');
   const [number, setNumber] = useState('');
+  const [sellers, setSellers] = useState([]);
+
+  const getSellers = async () => {
+    const allSellers = await fetch('http://localhost:3001/sellers');
+    const json = await allSellers.json();
+    setSellerId(json[0].id);
+    setSellers(json);
+  };
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem('saleProducts'));
     setSaleProducts(items);
-    setUser(JSON.parse(localStorage.getItem('user')));
-    console.log(username);
-    console.log(saleProducts);
+    const getUser = JSON.parse(localStorage.getItem('user'));
+    setUser(getUser.name);
+    setUserId(getUser.id);
+    getSellers();
   }, []);
 
   const removeItemCartID = (id) => {
-    console.log('id', id);
     const newItems = saleProducts.filter((item) => item.productId !== id);
     localStorage.setItem('saleProducts', JSON.stringify(newItems));
     setSaleProducts(newItems);
   };
 
+  const somaTotal = (items) => {
+    const total = items.reduce((acc, item) => acc
+    + (Number(item.price) * item.quantity), 0).toFixed(2).replace('.', ',');
+
+    return total;
+  };
+
+  const somaTotal2 = (items) => {
+    const total = items.reduce((acc, item) => acc
+    + (Number(item.price) * item.quantity), 0).toFixed(2);
+
+    return total;
+  };
+
   const finishOrder = async () => {
+    const reqBody = {
+      userId,
+      sellerId,
+      totalPrice: parseFloat(somaTotal2(saleProducts)),
+      saleProducts,
+      deliveryAddress: address,
+      deliveryNumber: number,
+    };
+
     const options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(
-        { userId: username.id,
-          sellerId: saleProducts.sellerId,
-          totalPrice: saleProducts.totalPrice,
-          saleProducts: saleProducts.saleProducts,
-          deliveryAddress: address,
-          deliveryNumber: number,
-        },
-      ),
+      body: JSON.stringify(reqBody),
     };
 
     const notFoundTest = 404;
-    const created = 201;
     try {
       const result = await fetch('http://localhost:3001/sales', options);
-      if (result.status === created) {
-        history.push(`./customer/orders/${result.id}`);
-        return result.json();
+      const json = await result.json();
+      if (result) {
+        history.push(`/customer/orders/${json.id}`);
+        return result;
       }
     } catch (error) {
       console.log(notFoundTest);
     }
   };
 
-  const items = saleProducts;
   return (
     <main>
       <Navbar
-        username={ username.name }
-        // logout={ () => localStorage.user.clear() }
+        username={ username }
       />
       <div className="table-checkout">
         Finalizar Pedido:
@@ -68,7 +91,7 @@ function Checkout() {
           <TableHeadCheckout />
           <tbody>
             {
-              items.map((item, index) => (
+              saleProducts.map((item, index) => (
                 <ItemCar
                   key={ index }
                   index={ index }
@@ -85,8 +108,7 @@ function Checkout() {
         <div>
           <p data-testid="customer_checkout__element-order-total-price">
             Total: R$
-            { items.reduce((acc, item) => acc
-              + (Number(item.price) * item.quantity), 0).toFixed(2).replace('.', ',') }
+            { somaTotal(saleProducts) }
           </p>
         </div>
 
@@ -96,11 +118,22 @@ function Checkout() {
       <div>
         <label htmlFor="seller">
           Vendedor responsavel:
-          <input
-            type="text"
+          <select
+            type="select"
             data-testid="customer_checkout__select-seller"
             id="seller"
-          />
+          >
+            {sellers.map((seller) => (
+              <option
+                value={ seller.name }
+                key={ seller.id }
+                id={ seller.id }
+                onClick={ (e) => { setSellerId(Number(e.target.id)); } }
+              >
+                { seller.name }
+              </option>
+            ))}
+          </select>
         </label>
 
         <label htmlFor="address">
@@ -130,17 +163,12 @@ function Checkout() {
       <button
         type="button"
         data-testid="customer_checkout__button-submit-order"
-        onClick={ finishOrder() }
+        onClick={ () => finishOrder() }
       >
         Finalizar Pedido
       </button>
     </main>
   );
 }
-
-// Checkout.propTypes = {
-//   username: PropTypes.string.isRequired,
-//   logout: PropTypes.func.isRequired,
-// };
 
 export default Checkout;
