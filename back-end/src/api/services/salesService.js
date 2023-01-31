@@ -40,6 +40,12 @@ const salesService = {
     
     return userSales;
   },
+
+  updateStatus: async (saleId, saleStatus) => {
+    const updateStatus = await db.Sale.update(saleStatus, { where: { id: saleId } });
+    
+    return updateStatus;
+  },
 };
 
 module.exports = salesService;

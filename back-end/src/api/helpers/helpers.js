@@ -29,7 +29,7 @@ const validations = {
     return {};
   },
 
-  validateName: (name) => {    
+  validateName: (name) => {
     if (name.length < 12) {
       return {
         status: 400,

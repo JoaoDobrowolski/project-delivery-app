@@ -133,7 +133,7 @@ function CustomerOrderDetails() {
         </tbody>
       </table>
     </div>
-  );
+
 }
 
 export default CustomerOrderDetails;
