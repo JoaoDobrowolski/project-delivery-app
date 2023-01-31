@@ -87,7 +87,7 @@ function CustomerOrderDetails() {
               <tr key={ i }>
                 <td
                   data-testid={
-                    `customer_order_details__element-order-table-item-number-${i}`
+                    `customer_order_details__element-order-table-item-number-${i}` // ta comecando do 0, se o teste pedir apenas acrescentar + 1 para comecar 1
                   }
                 >
                   {i + 1}
