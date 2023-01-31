@@ -9,6 +9,9 @@ function Checkout() {
 
   const [saleProducts, setSaleProducts] = useState([]);
   const [username, setUser] = useState('');
+  const [userId, setUserId] = useState();
+  const [sellerId, setSellerId] = useState();
+  const [totalPrice, setTotalPrice] = useState();
   const [address, setAddress] = useState('');
   const [number, setNumber] = useState('');
   const [sellers, setSellers] = useState([]);
@@ -16,6 +19,7 @@ function Checkout() {
   const getSellers = async () => {
     const allSellers = await fetch('http://localhost:3001/sellers');
     const json = await allSellers.json();
+    setSellerId(json[0].id);
     setSellers(json);
   };
 
@@ -24,6 +28,7 @@ function Checkout() {
     setSaleProducts(items);
     const getUser = JSON.parse(localStorage.getItem('user'));
     setUser(getUser.name);
+    setUserId(getUser.id);
     getSellers();
   }, []);
 
@@ -34,36 +39,43 @@ function Checkout() {
   };
 
   const finishOrder = async () => {
+    const reqBody = {
+      userId,
+      sellerId,
+      totalPrice,
+      saleProducts: saleProducts.saleProducts,
+      deliveryAddress: address,
+      deliveryNumber: number,
+    };
+
     const options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(
-        { userId: username.id,
-          sellerId: saleProducts.sellerId,
-          totalPrice: saleProducts.totalPrice,
-          saleProducts: saleProducts.saleProducts,
-          deliveryAddress: address,
-          deliveryNumber: number,
-        },
-      ),
+      body: JSON.stringify(reqBody),
     };
 
-    const notFoundTest = 404;
-    const created = 201;
-    try {
-      console.log('options --> ', options);
-      const result = await fetch('http://localhost:3001/sales', options);
-      console.log('result --> ', result);
-      if (result.status === created) {
-        history.push(`./customer/orders/${result.id}`);
-        return result.json();
-      }
-    } catch (error) {
-      console.log(notFoundTest);
-    }
+    console.log('reqBody --> ', reqBody);
+    console.log('saleProducts --> ', saleProducts);
+    console.log('address --> ', address);
+    console.log('number --> ', number);
+    const result = await fetch('http://localhost:3001/sales', options);
+    console.log('result --> ', result);
+
+    // const notFoundTest = 404;
+    // const created = 201;
+    // try {
+    //   if (result.status === created) {
+    //     history.push(`./customer/orders/${result.id}`);
+    //     return result.json();
+    //   }
+    // } catch (error) {
+    //   console.log(notFoundTest);
+    // }
   };
 
-  const items = saleProducts;
+  const somaTotal = (items) => items.reduce((acc, item) => acc
+      + (Number(item.price) * item.quantity), 0).toFixed(2).replace('.', ',');
+
   return (
     <main>
       <Navbar
@@ -76,7 +88,7 @@ function Checkout() {
           <TableHeadCheckout />
           <tbody>
             {
-              items.map((item, index) => (
+              saleProducts.map((item, index) => (
                 <ItemCar
                   key={ index }
                   index={ index }
@@ -93,8 +105,7 @@ function Checkout() {
         <div>
           <p data-testid="customer_checkout__element-order-total-price">
             Total: R$
-            { items.reduce((acc, item) => acc
-              + (Number(item.price) * item.quantity), 0).toFixed(2).replace('.', ',') }
+            { somaTotal(saleProducts) }
           </p>
         </div>
 
@@ -113,6 +124,8 @@ function Checkout() {
               <option
                 value={ seller.name }
                 key={ seller.id }
+                id={ seller.id }
+                onClick={ (e) => { setSellerId(Number(e.target.id)); } }
               >
                 { seller.name }
               </option>
