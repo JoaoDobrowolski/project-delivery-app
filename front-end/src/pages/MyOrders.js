@@ -1,20 +1,29 @@
 import { useHistory } from 'react-router-dom';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../components/NavBar';
-// import OrderCard from '../components/OrderCard';
+import OrderCard from '../components/OrderCard';
 
 function MyOrders() {
   const history = useHistory();
   const [username, setUsername] = useState('');
+  const [sales, setSales] = useState([]);
+
+  const endpoint = 'http://localhost:3001/sales/';
 
   useEffect(() => {
+    const fetchData = async () => {
+      await getOrders();
+    };
+    fetchData();
     getUsername();
   }, []);
 
-  // const getOrders = async () => {
-  //   const user = localStorage.getItem
-  //   const reponse = await fetch()
-  // }
+  const getOrders = async () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const response = await fetch(`${endpoint}${user.id}`);
+    const data = await response.json();    
+    setSales(data);
+  };
 
   const getUsername = () => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -33,7 +42,19 @@ function MyOrders() {
         logout={ logout }
       />
       <main>
-        <p> OrderCard.map...</p>
+        <div>
+          {
+            sales.map((sale) => (
+              <OrderCard
+                key={ sale.id }
+                index={ sale.id }
+                status={ sale.status }
+                date={ sale.saleDate }
+                price={ sale.price }  
+              />
+            ))
+          }
+        </div>
       </main> 
 
     </div>
