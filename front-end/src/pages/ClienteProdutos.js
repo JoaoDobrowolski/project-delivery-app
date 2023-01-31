@@ -44,11 +44,6 @@ function ClienteProdutos() {
     storageProducts();
   }, []);
 
-  const logout = () => {
-    localStorage.removeItem('user');
-    history.push('/');
-  };
-
   const randomClick = () => {
     history.push('/customer/checkout');
   };
@@ -57,7 +52,6 @@ function ClienteProdutos() {
     <div>
       <Navbar
         username={ username }
-        logout={ logout }
       />
       <div className="product">
         { (
