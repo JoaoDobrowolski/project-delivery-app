@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
 // <div
 //       // id={ index }
 //       // onClick={ () => redirectToOrderDetails() }
 //     ></div>
 function OrderCard({ index, status, date, price }) {
+  const history = useHistory();
+
   const FormatOrderNumber = (orderNumber) => {
     const TEN = 10;
     const HUNDRED = 100;
@@ -22,7 +25,9 @@ function OrderCard({ index, status, date, price }) {
   };
 
   return (
-    <div>
+    <button
+      onClick={ () => history.push(`/customer/orders/${index}`) }
+    >
       <p
         data-testid={ `customer_orders__element-order-id-${index}` }
       >
@@ -43,7 +48,7 @@ function OrderCard({ index, status, date, price }) {
       >
         { FormatOrderPrice(price) }
       </p>
-    </div>
+    </button>
   );
 }
 
