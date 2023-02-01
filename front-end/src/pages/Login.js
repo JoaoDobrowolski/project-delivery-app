@@ -8,16 +8,31 @@ function Login() {
     email: '',
     password: '',
   });
+  const [notFound, setNotFound] = useState(false);
 
-  const UserLogged = () => {
-    const user = localStorage.getItem('user');
-    if (user) return history.push('/customer/products');
+  const redirectAux = () => {
+    const getRole = JSON.parse(localStorage.getItem('user')).role;
+
+    if (getRole === 'seller') {
+      history.push('/seller/orders');
+    } else if (getRole === 'customer') {
+      history.push('/customer/products');
+    } else {
+      history.push('/admin/manage');
+    }
+  };
+
+  const redirectRole = () => {
+    const getUserStorage = JSON.parse(localStorage.getItem('user'));
+    console.log(getUserStorage);
+    if (getUserStorage !== null) {
+      redirectAux();
+    }
   };
 
   useEffect(() => {
-    UserLogged();
+    redirectRole();
   }, []);
-  const [notFound, setNotFound] = useState(false);
 
   const validateEmail = () => {
     const { email } = login;
@@ -64,7 +79,7 @@ function Login() {
       if (response.status === loginTest) {
         const json = await response.json();
         LoginToLocalStorage(json);
-        history.push('./customer/products');
+        redirectAux();
       }
     } catch (error) {
       console.error(error);
