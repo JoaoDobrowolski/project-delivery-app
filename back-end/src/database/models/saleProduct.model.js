@@ -7,11 +7,13 @@ const SaleProduct = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true,
         type: DataTypes.INTEGER,
+        field: 'sale_id',
       },
       productId: {
         allowNull: false,
         primaryKey: true,
         type: DataTypes.INTEGER,
+        field: 'product_id',
       },
       quantity: {
         allowNull: false,
@@ -20,7 +22,7 @@ const SaleProduct = (sequelize, DataTypes) => {
 
     },
     {
-      tableName: 'saleProducts',
+      tableName: 'sales_products',
       underscored: false,
       timestamps: false,
     },

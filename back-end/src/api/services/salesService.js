@@ -20,7 +20,7 @@ const salesService = {
       totalPrice: saleData.totalPrice,
       deliveryAddress: saleData.deliveryAddress,
       deliveryNumber: saleData.deliveryNumber,
-      status: 'pendente',
+      status: 'Pendente',
       saleDate: newDate,
     });
 
