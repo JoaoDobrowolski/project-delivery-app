@@ -51,7 +51,7 @@ function MyOrders() {
                 key={ sale.id }
                 index={ sale.id }
                 status={ sale.status }
-                date={ sale.saleDate }
+                date={ (sale.saleDate).split('T')[0].split('-').reverse().join('/') }
                 price={ sale.totalPrice }
               />
             ))
