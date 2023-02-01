@@ -6,12 +6,27 @@ import PropTypes from 'prop-types';
 //       // onClick={ () => redirectToOrderDetails() }
 //     ></div>
 function OrderCard({ index, status, date, price }) {
+  const FormatOrderNumber = (orderNumber) => {
+    const TEN = 10;
+    const HUNDRED = 100;
+    const THOUSAND = 1000;
+    if (orderNumber < TEN) return `000${orderNumber}`;
+    if (orderNumber < HUNDRED) return `00${orderNumber}`;
+    if (orderNumber < THOUSAND) return `0${orderNumber}`;
+    return orderNumber;
+  };
+
+  const FormatOrderPrice = (orderPrice) => {
+    const priceComma = orderPrice.replace('.', ',');
+    return `R$ ${priceComma}`;
+  };
+
   return (
     <div>
       <p
         data-testid={ `customer_orders__element-order-id-${index}` }
       >
-        { `Pedido Nº ${index}`}
+        { `Pedido Nº ${FormatOrderNumber(index)}`}
       </p>
       <p
         data-testid={ `customer_orders__element-delivery-status-${index}` }
@@ -26,7 +41,7 @@ function OrderCard({ index, status, date, price }) {
       <p
         data-testid={ `customer_orders__element-card-price-${index}` }
       >
-        { price }
+        { FormatOrderPrice(price) }
       </p>
     </div>
   );
