@@ -29,34 +29,30 @@ function SellerOrders() {
       <Navbar
         username={ username }
       />
-      {sellerSales.map((sale, i) => (
+      { sellerSales.map((sale, i) => (
         <div key={ i }>
 
           <span
-            data-testid={ `
-        seller_orders__element-order-id-${sale.id}
-        ` }
+            data-testid={ `seller_orders__element-order-id-${sale.id}` }
           >
-            {`Pedido ${(`0000${sale.id}`).slice(magicNumber)}`}
+            { `Pedido ${(`0000${sale.id}`).slice(magicNumber)}` }
           </span>
           <span
-            data-testid={ `
-          seller_orders__element-delivery-status-${sale.id}
-          ` }
+            data-testid={ `seller_orders__element-delivery-status-${sale.id}` }
           >
-            {sale.status}
+            { sale.status }
           </span>
           <span data-testid={ `seller_orders__element-order-date-${sale.id}` }>
-            {sale.saleDate}
+            { sale.saleDate }
           </span>
           <span data-testid={ `seller_orders__element-card-price-${sale.id}` }>
-            {sale.totalPrice}
+            { sale.totalPrice }
           </span>
           <span data-testid={ `seller_orders__element-card-address-${sale.id}` }>
-            {`${sale.deliveryAddress}, ${sale.deliveryNumber}`}
+            { `${sale.deliveryAddress}, ${sale.deliveryNumber}` }
           </span>
         </div>
-      ))}
+      )) }
     </div>
   );
 }
