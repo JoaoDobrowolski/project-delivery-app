@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 function Login() {
@@ -9,6 +9,14 @@ function Login() {
     password: '',
   });
 
+  const UserLogged = () => {
+    const user = localStorage.getItem('user');
+    if (user) return history.push('/customer/products');
+  };
+
+  useEffect(() => {
+    UserLogged();
+  }, []);
   const [notFound, setNotFound] = useState(false);
 
   const validateEmail = () => {
