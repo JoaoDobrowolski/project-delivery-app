@@ -1,40 +1,42 @@
-import { useHistory } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/NavBar';
 import OrderCard from '../components/OrderCard';
 
 function MyOrders() {
-  const history = useHistory();
   const [username, setUsername] = useState('');
   const [sales, setSales] = useState([]);
 
   const endpoint = 'http://localhost:3001/sales/';
 
-  const getOrders = async () => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    console.log(`${endpoint}${user.id}`);
-    const response = await fetch(`${endpoint}${user.id}`);
-    console.log('response', response);
-    const data = await response.json();
-    console.log('data', data);
-    setSales(data);
+  const getOrdersAPI = async (user) => {
+    const options = {
+      method: 'GET',
+      headers: {
+        Authorization: user.token,
+        'Content-Type': 'application/json',
+      },
+    };
+    try {
+      const response = await fetch(`${endpoint}${user.id}`, options);
+      const data = await response.json();
+      setSales(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const getUsername = () => {
+  const getUserFromStorage = () => {
     const user = JSON.parse(localStorage.getItem('user'));
-    setUsername(user.name);
-  };
-  const redirectToOrderDetails = (event) => {
-    const { id } = event.target;
-    history.push(`/customer/orders/${id}`);
+    return user;
   };
 
   useEffect(() => {
+    const user = getUserFromStorage();
+    setUsername(user.name);
     const fetchData = async () => {
-      await getOrders();
+      await getOrdersAPI(user);
     };
     fetchData();
-    getUsername();
   }, []);
   return (
     <div>
@@ -51,7 +53,6 @@ function MyOrders() {
                 status={ sale.status }
                 date={ sale.saleDate }
                 price={ sale.totalPrice }
-                redirectToOrderDetails={ (event) => redirectToOrderDetails(event) }
               />
             ))
           }
