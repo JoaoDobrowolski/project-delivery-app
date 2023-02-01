@@ -14,6 +14,7 @@ function Checkout() {
   const [address, setAddress] = useState('');
   const [number, setNumber] = useState('');
   const [sellers, setSellers] = useState([]);
+  const [userToken, setUserToken] = useState('');
 
   const getSellers = async () => {
     const allSellers = await fetch('http://localhost:3001/sellers');
@@ -28,6 +29,7 @@ function Checkout() {
     const getUser = JSON.parse(localStorage.getItem('user'));
     setUser(getUser.name);
     setUserId(getUser.id);
+    setUserToken(getUser.token);
     getSellers();
   }, []);
 
@@ -39,14 +41,14 @@ function Checkout() {
 
   const somaTotal = (items) => {
     const total = items.reduce((acc, item) => acc
-    + (Number(item.price) * item.quantity), 0).toFixed(2).replace('.', ',');
+      + (Number(item.price) * item.quantity), 0).toFixed(2).replace('.', ',');
 
     return total;
   };
 
   const somaTotal2 = (items) => {
     const total = items.reduce((acc, item) => acc
-    + (Number(item.price) * item.quantity), 0).toFixed(2);
+      + (Number(item.price) * item.quantity), 0).toFixed(2);
 
     return total;
   };
@@ -63,7 +65,10 @@ function Checkout() {
 
     const options = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Authorization: userToken,
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(reqBody),
     };
 
@@ -123,7 +128,7 @@ function Checkout() {
             data-testid="customer_checkout__select-seller"
             id="seller"
           >
-            {sellers.map((seller) => (
+            { sellers.map((seller) => (
               <option
                 value={ seller.name }
                 key={ seller.id }
@@ -132,7 +137,7 @@ function Checkout() {
               >
                 { seller.name }
               </option>
-            ))}
+            )) }
           </select>
         </label>
 

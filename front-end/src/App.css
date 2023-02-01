@@ -1,4 +1,4 @@
-.container {
+/* .container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,8 +32,6 @@ nav {
   font-size: 1.5em;
   font-weight: 900;
   float: left;
-  position: fixed; /* não defina top/bottom/left/right */
-  width: 220px;
   height: 40px;
   align-self: center;
   padding-top: 8px;
@@ -51,13 +49,13 @@ nav {
   flex-wrap: wrap;
   margin-top: 50px;
   justify-content: center;
-}
+} */
 
 /* .product first-child>img {
 width: 50px;
 } */
 
-.product img {
+/* .product img {
   height: 250px;
 }
 
@@ -105,4 +103,4 @@ table {
 
 .table-checkout {
   margin-top: 40px;
-}
+} */
