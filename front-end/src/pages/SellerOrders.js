@@ -47,7 +47,7 @@ function SellerOrders() {
             { sale.status }
           </p>
           <p data-testid={ `seller_orders__element-order-date-${sale.id}` }>
-            { sale.saleDate }
+            { (sale.saleDate.split('T')[0].split('-').reverse().join('/')) }
           </p>
           <p data-testid={ `seller_orders__element-card-price-${sale.id}` }>
             { sale.totalPrice }
