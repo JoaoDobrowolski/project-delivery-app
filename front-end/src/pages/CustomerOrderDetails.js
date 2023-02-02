@@ -1,12 +1,14 @@
+import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/NavBar';
 
-const idCheck = 1;
-const sellerName = 'Fulano Teste';
-
 function CustomerOrderDetails() {
+  const { id } = useParams();
+  const magicNumber = -4;
+
   const [username, setUsername] = useState('');
   const [products, setProducts] = useState([]);
+  const [sale, setSale] = useState({});
 
   const getLocalStorage = () => {
     const userData = localStorage.getItem('user');
@@ -17,8 +19,17 @@ function CustomerOrderDetails() {
     setUsername(userDataObj.name);
   };
 
+  const getData = async () => {
+    console.log('id --> ', id);
+    const saleResponse = await fetch(`http://localhost:3001/sale/${id}`);
+    const saleJson = await saleResponse.json();
+    console.log('saleJson --> ', saleJson);
+    setSale(saleJson);
+  };
+
   useEffect(async () => {
     getLocalStorage();
+    getData();
   }, []);
 
   return (
@@ -29,37 +40,32 @@ function CustomerOrderDetails() {
       <table>
         <thead>
           <th
-            data-testid={
-              `customer_order_details__element-order-details-label-order-${idCheck}` // ok
-            }
+            data-testid="customer_order_details__element-order-details-label-order-id"
           >
-            Pedido - placeholder id do pedido
+            { `Pedido ${(`0000${id}`).slice(magicNumber)}` }
+          </th>
+          <th
+            data-testid="customer_order_details__element-order-details-label-seller-name"
+          >
+            { `P. Vend: - ${sale.sellerName}` }
 
           </th>
           <th
-            data-testid={
-              `customer_order_details__element-order-details-label-seller-${sellerName}` // ok
-            }
+            data-testid="customer_order_details__element-order-details-label-order-date"
           >
-            P. Vend: - placeholder nome do(a) vendedor(a)
+            { `Data - ${sale.saleDate}` }
 
           </th>
           <th
-            data-testid="customer_order_details__element-order-details-label-order-date" // ok
+            data-testid={ 'customer_order_details__element-order-'
+            + 'details-label-delivery-status' }
           >
-            Placeholder - Data
-
-          </th>
-          <th
-            data-testid={ `
-            customer_order_details__element-order-details-label-delivery-status${idCheck}
-            ` } // talvez precise de status- , mas no figma n tem
-          >
-            Status Pedido - placeholder entregue ou não
+            { `Status Pedido - ${sale.status}` }
 
           </th>
           <button
-            data-testid="customer_order_details__button-delivery-check " // ok
+            data-testid="customer_order_details__button-delivery-check"
+            disabled
           >
             Placeholder - Marcar como Entregue
 
