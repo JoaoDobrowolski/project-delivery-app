@@ -29,6 +29,28 @@ const salesService = {
     return { ...sale.dataValues, saleProducts: saleData.saleProducts };
   },
 
+  getSale: async (id) => {
+    const sale = await db.Sale.findOne({ where: { id } });
+
+    const seller = await db.User.findOne({ where: { id: sale.sellerId } });
+
+    const date = sale.saleDate;
+
+    const result = {
+      id: sale.id,
+      saleDate: date,
+      sellerId: sale.sellerId,
+      status: sale.status,
+      totalPrice: sale.totalPrice,
+      userId: sale.userId,
+      deliveryAddress: sale.deliveryAddress,
+      deliveryNumber: sale.deliveryNumber,
+      sellerName: seller.name,
+    };
+    
+    return result;
+  },
+
   getUserSales: async (userId) => {
     const userSales = await db.Sale.findAll({ where: { userId } });
     
