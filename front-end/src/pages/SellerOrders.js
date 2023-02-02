@@ -1,10 +1,12 @@
+import { useHistory } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/NavBar';
 
 function SellerOrders() {
+  const history = useHistory();
   const [username, setUsername] = useState('');
   const [sellerSales, setSellerSales] = useState([]);
-  const endpoint = 'http://localhost:3005/sales/';
+  const endpoint = 'http://localhost:3001/sales/';
   const options = { method: 'GET' };
   const user = JSON.parse(localStorage.getItem('user'));
   const magicNumber = -4;
@@ -30,28 +32,30 @@ function SellerOrders() {
         username={ username }
       />
       { sellerSales.map((sale, i) => (
-        <div key={ i }>
-
-          <span
+        <button
+          key={ i }
+          onClick={ () => history.push(`/seller/orders/${sale.id}`) }
+        >
+          <p
             data-testid={ `seller_orders__element-order-id-${sale.id}` }
           >
             { `Pedido ${(`0000${sale.id}`).slice(magicNumber)}` }
-          </span>
-          <span
+          </p>
+          <p
             data-testid={ `seller_orders__element-delivery-status-${sale.id}` }
           >
             { sale.status }
-          </span>
-          <span data-testid={ `seller_orders__element-order-date-${sale.id}` }>
-            { sale.saleDate }
-          </span>
-          <span data-testid={ `seller_orders__element-card-price-${sale.id}` }>
+          </p>
+          <p data-testid={ `seller_orders__element-order-date-${sale.id}` }>
+            { (sale.saleDate.split('T')[0].split('-').reverse().join('/')) }
+          </p>
+          <p data-testid={ `seller_orders__element-card-price-${sale.id}` }>
             { sale.totalPrice }
-          </span>
-          <span data-testid={ `seller_orders__element-card-address-${sale.id}` }>
+          </p>
+          <p data-testid={ `seller_orders__element-card-address-${sale.id}` }>
             { `${sale.deliveryAddress}, ${sale.deliveryNumber}` }
-          </span>
-        </div>
+          </p>
+        </button>
       )) }
     </div>
   );
