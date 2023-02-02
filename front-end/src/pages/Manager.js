@@ -3,7 +3,8 @@ import Navbar from '../components/NavBar';
 
 function Manager() {
   const [managerName, setManagerName] = useState('');
-  // const [conflicted, setConflicted] = useState(false);
+  const [conflicted, setConflicted] = useState(false);
+  const [token, setToken] = useState('');
 
   const [register, setRegister] = useState({
     username: '',
@@ -12,10 +13,11 @@ function Manager() {
     role: 'seller',
   });
 
-  const getManagerName = () => {
+  const getManagerFromStorage = () => {
     const userData = localStorage.getItem('user');
     const userDataObj = JSON.parse(userData);
     setManagerName(userDataObj.name);
+    setToken(userDataObj.token);
   };
 
   const validateEmail = () => {
@@ -45,36 +47,44 @@ function Manager() {
     }));
   };
 
-  // const clickRegister = async () => {
-  //   const options = {
-  //     method: 'POST',
-  //     headers: { Authorization: '', 'Content-Type': 'application/json' },
-  //     body: JSON.stringify({
-  //       username: username.value,
-  //       email: email.value,
-  //       password: password.value,
-  //     }),
-  //   };
+  const clickRegister = async () => {
+    const { username, email, password, role } = register;
+    const options = {
+      method: 'POST',
+      headers: { Authorization: token, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username,
+        email,
+        password,
+        role,
+      }),
+    };
 
-  //   const conflictedTest = 409;
-  //   const createdTest = 201;
+    const conflictedTest = 409;
+    const createdTest = 201;
 
-  //   try {
-  //     const response = await fetch('http://localhost:3001/register', options);
+    try {
+      const response = await fetch('http://localhost:3001/admin', options);
 
-  //     if (response.status === conflictedTest) {
-  //       setConflicted(true);
-  //     }
-  //     if (response.status === createdTest) {
-  //       history.push('./customer/products');
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+      if (response.status === conflictedTest) {
+        setConflicted(true);
+      }
+      if (response.status === createdTest) {
+        setConflicted(false);
+        setRegister({
+          username: '',
+          email: '',
+          password: '',
+          role: 'seller',
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    getManagerName();
+    getManagerFromStorage();
   }, []);
 
   return (
@@ -129,15 +139,15 @@ function Manager() {
         type="button"
         data-testid="admin_manage__button-register"
         disabled={ !(validateEmail() && validatePassword() && validateName()) }
-        onClick={ () => console.log(register) }
+        onClick={ () => clickRegister() }
       >
         Cadastrar
       </button>
-      {/* {
+      {
         conflicted
-          ? <p> Usuário já existe </p>
+          ? <p data-testid="admin_manage__element-invalid-register"> Usuário existe </p>
           : null
-      } */}
+      }
     </div>
   );
 }
