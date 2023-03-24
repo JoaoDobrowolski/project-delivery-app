@@ -1,4 +1,4 @@
-/* .container {
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,13 +49,13 @@ nav {
   flex-wrap: wrap;
   margin-top: 50px;
   justify-content: center;
-} */
+}
 
-/* .product first-child>img {
+.product first-child>img {
 width: 50px;
-} */
+}
 
-/* .product img {
+.product img {
   height: 250px;
 }
 
@@ -103,4 +103,4 @@ table {
 
 .table-checkout {
   margin-top: 40px;
-} */
+}
