@@ -46,8 +46,6 @@ Para iniciar o projeto, execute o seguinte comando no terminal na pasta raiz:
 
 Isso iniciará a aplicação. Abra http://localhost:3000 para visualizá-la no navegador.
 
-![Diagrama de ER](./assets/readme/eer.png)
-
 -----
 
 # Contribuindo
